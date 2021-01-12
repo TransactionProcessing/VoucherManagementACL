@@ -1,0 +1,23 @@
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
+WORKDIR /app
+EXPOSE 80
+
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
+WORKDIR /src
+COPY ["VoucherManagementACL/NuGet.Config", "."]
+COPY ["VoucherManagementACL/VoucherManagementACL.csproj", "VoucherManagementACL/"]
+COPY ["VoucherManagementACL.DataTransferObjects/VoucherManagementACL.DataTransferObjects.csproj", "VoucherManagementACL.DataTransferObjects/"]
+COPY ["VoucherManagementACL.BusinessLogic/VoucherManagementACL.BusinessLogic.csproj", "VoucherManagementACL.BusinessLogic/"]
+COPY ["VoucherManagementACL.Models/VoucherManagementACL.Models.csproj", "VoucherManagementACL.Models/"]
+RUN dotnet restore "VoucherManagementACL/VoucherManagementACL.csproj"
+COPY . .
+WORKDIR "/src/VoucherManagementACL"
+RUN dotnet build "VoucherManagementACL.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "VoucherManagementACL.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "VoucherManagementACL.dll"]
