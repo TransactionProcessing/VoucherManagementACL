@@ -33,7 +33,7 @@ jobs:
             
     - name: Build Docker Images 
       run: |
-        docker build . --file VoucherManagementACL/Dockerfile --tag stuartferguson/vouchermanagementacl:latest --tag stuartferguson/vouchermanagementacl:${{ steps.get_version.outputs.VERSION }}         
+        docker build . --file VoucherManagementACL/dockerfile --tag stuartferguson/vouchermanagementacl:latest --tag stuartferguson/vouchermanagementacl:${{ steps.get_version.outputs.VERSION }}         
         
     - name: Publish Images to Docker Hub
       run: |

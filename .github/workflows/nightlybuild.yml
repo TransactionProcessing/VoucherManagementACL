@@ -43,7 +43,7 @@ jobs:
           path-to-lcov: lcov.info    
         
     - name: Build Docker Image
-      run: docker build . --file VoucherManagementACL/Dockerfile --tag vouchermanagementacl:latest
+      run: docker build . --file VoucherManagementACL/dockerfile --tag vouchermanagementacl:latest
 
     - name: Run Integration Tests
       run: dotnet test "VoucherManagementACL.IntegrationTests\VoucherManagementACL.IntegrationTests.csproj"
