@@ -6,15 +6,17 @@
     /// <summary>
     /// 
     /// </summary>
+    /// <seealso cref="VoucherManagementACL.Factories.IModelFactory" />
     /// <seealso cref="IModelFactory" />
     public class ModelFactory : IModelFactory
     {
         #region Methods
 
-        
-
-        #endregion
-
+        /// <summary>
+        /// Converts from.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
         public GetVoucherResponseMessage ConvertFrom(GetVoucherResponse model)
         {
             if (model == null)
@@ -36,5 +38,33 @@
 
             return responseMessage;
         }
+
+        /// <summary>
+        /// Converts from.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
+        public RedeemVoucherResponseMessage ConvertFrom(RedeemVoucherResponse model)
+        {
+            if (model == null)
+            {
+                return null;
+            }
+
+            RedeemVoucherResponseMessage responseMessage = new RedeemVoucherResponseMessage
+                                                    {
+                                                        VoucherCode = model.VoucherCode,
+                                                        Balance = model.Balance,
+                                                        ResponseMessage = model.ResponseMessage,
+                                                        ContractId = model.ContractId,
+                                                        EstateId = model.EstateId,
+                                                        ExpiryDate = model.ExpiryDate,
+                                                        ResponseCode = model.ResponseCode
+                                                    };
+
+            return responseMessage;
+        }
+
+        #endregion
     }
 }

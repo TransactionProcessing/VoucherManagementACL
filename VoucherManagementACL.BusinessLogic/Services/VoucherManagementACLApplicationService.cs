@@ -5,12 +5,14 @@
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    using Models;
     using Newtonsoft.Json;
     using SecurityService.Client;
     using SecurityService.DataTransferObjects.Responses;
     using Shared.General;
     using VoucherManagement.Client;
+    using VoucherManagement.DataTransferObjects;
+    using GetVoucherResponse = Models.GetVoucherResponse;
+    using RedeemVoucherResponse = Models.RedeemVoucherResponse;
 
     /// <summary>
     /// 
@@ -41,7 +43,7 @@
         #endregion
 
         #region Methods
-        
+
         /*public async Task<ProcessLogonTransactionResponse> ProcessLogonTransaction(Guid estateId,
                                                                                    Guid merchantId,
                                                                                    DateTime transactionDateTime,
@@ -125,9 +127,17 @@
 
             return response;
         }*/
-        
+
         #endregion
 
+        /// <summary>
+        /// Processes the logon transaction.
+        /// </summary>
+        /// <param name="estateId">The estate identifier.</param>
+        /// <param name="contractId">The contract identifier.</param>
+        /// <param name="voucherCode">The voucher code.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
         public async Task<GetVoucherResponse> GetVoucher(Guid estateId,
                                                          Guid contractId,
                                                          String voucherCode,
@@ -187,9 +197,73 @@
             }
 
             return response;
+        }
 
+        public async Task<RedeemVoucherResponse> RedeemVoucher(Guid estateId,
+                                                                Guid contractId,
+                                                                String voucherCode,
+                                                                CancellationToken cancellationToken)
+        {
+            // Get a client token to call the Voucher Management
+            String clientId = ConfigurationReader.GetValue("AppSettings", "ClientId");
+            String clientSecret = ConfigurationReader.GetValue("AppSettings", "ClientSecret");
 
+            TokenResponse accessToken = await this.SecurityServiceClient.GetToken(clientId, clientSecret, cancellationToken);
 
+            RedeemVoucherResponse response = null;
+
+            try
+            {
+                RedeemVoucherRequest redeemVoucherRequest = new RedeemVoucherRequest
+                                                            {
+                                                                EstateId = estateId,
+                                                                VoucherCode = voucherCode
+                                                            };
+
+                VoucherManagement.DataTransferObjects.RedeemVoucherResponse redeemVoucherResponse = await this.VoucherManagementClient.RedeemVoucher(accessToken.AccessToken, redeemVoucherRequest, cancellationToken);
+
+                response = new RedeemVoucherResponse
+                {
+                    ResponseCode = "0000", // Success
+                    ResponseMessage = "SUCCESS",
+                    ContractId = contractId,
+                    EstateId = estateId,
+                    ExpiryDate = redeemVoucherResponse.ExpiryDate,
+                    Balance = redeemVoucherResponse.RemainingBalance,
+                    VoucherCode = redeemVoucherResponse.VoucherCode
+                };
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException is InvalidOperationException)
+                {
+                    // This means there is an error in the request
+                    response = new RedeemVoucherResponse
+                    {
+                        ResponseCode = "0001", // Request Message error
+                        ResponseMessage = ex.InnerException.Message,
+                    };
+                }
+                else if (ex.InnerException is HttpRequestException)
+                {
+                    // Request Send Exception
+                    response = new RedeemVoucherResponse
+                    {
+                        ResponseCode = "0002", // Request Message error
+                        ResponseMessage = "Error Sending Request Message",
+                    };
+                }
+                else
+                {
+                    response = new RedeemVoucherResponse
+                    {
+                        ResponseCode = "0003", // General error
+                        ResponseMessage = "General Error",
+                    };
+                }
+            }
+
+            return response;
         }
     }
 }

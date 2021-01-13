@@ -7,20 +7,18 @@
     /// <summary>
     /// 
     /// </summary>
-    /// <seealso cref="MediatR.IRequest{VoucherManagementACL.Models.GetVoucherResponse}" />
-    public class GetVoucherRequest : IRequest<GetVoucherResponse>
+    /// <seealso cref="MediatR.IRequest{VoucherManagementACL.Models.RedeemVoucherResponse}" />
+    public class RedeemVoucherRequest : IRequest<RedeemVoucherResponse>
     {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetVoucherRequest"/> class.
+        /// Initializes a new instance of the <see cref="RedeemVoucherRequest"/> class.
         /// </summary>
         /// <param name="estateId">The estate identifier.</param>
         /// <param name="contractId">The contract identifier.</param>
         /// <param name="voucherCode">The voucher code.</param>
-        private GetVoucherRequest(Guid estateId,
-                                  Guid contractId,
-                                  String voucherCode)
+        private RedeemVoucherRequest(Guid estateId, Guid contractId, String voucherCode)
         {
             this.EstateId = estateId;
             this.ContractId = contractId;
@@ -32,14 +30,6 @@
         #region Properties
 
         /// <summary>
-        /// Gets the contract identifier.
-        /// </summary>
-        /// <value>
-        /// The contract identifier.
-        /// </value>
-        public Guid ContractId { get; }
-
-        /// <summary>
         /// Gets the estate identifier.
         /// </summary>
         /// <value>
@@ -47,6 +37,13 @@
         /// </value>
         public Guid EstateId { get; }
 
+        /// <summary>
+        /// Gets the contract identifier.
+        /// </summary>
+        /// <value>
+        /// The contract identifier.
+        /// </value>
+        public Guid ContractId { get; }
         /// <summary>
         /// Gets the voucher code.
         /// </summary>
@@ -66,11 +63,9 @@
         /// <param name="contractId">The contract identifier.</param>
         /// <param name="voucherCode">The voucher code.</param>
         /// <returns></returns>
-        public static GetVoucherRequest Create(Guid estateId,
-                                               Guid contractId,
-                                               String voucherCode)
+        public static RedeemVoucherRequest Create(Guid estateId, Guid contractId, String voucherCode)
         {
-            return new GetVoucherRequest(estateId, contractId, voucherCode);
+            return new RedeemVoucherRequest(estateId, contractId, voucherCode);
         }
 
         #endregion

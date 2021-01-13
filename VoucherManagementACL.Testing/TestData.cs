@@ -62,6 +62,14 @@
                 VoucherId = TestData.VoucherId
             };
 
+        public static RedeemVoucherResponse RedeemVoucherResponse =>
+            new RedeemVoucherResponse
+            {
+                VoucherCode = TestData.VoucherCode,
+                RemainingBalance = TestData.Balance,
+                ExpiryDate = TestData.ExpiryDate
+            };
+
         public static Models.GetVoucherResponse GetVoucherResponseModel =>
             new Models.GetVoucherResponse
             {
@@ -70,6 +78,18 @@
                 ContractId = TestData.ContractId,
                 Value = TestData.Value,
                 VoucherId = TestData.VoucherId,
+                EstateId = TestData.EstateId,
+                ResponseCode = TestData.ResponseCode,
+                ResponseMessage = TestData.ResponseMessage
+            };
+
+        public static Models.RedeemVoucherResponse RedeemVoucherResponseModel =>
+            new Models.RedeemVoucherResponse
+            {
+                VoucherCode = TestData.VoucherCode,
+                ExpiryDate = TestData.ExpiryDate,
+                ContractId = TestData.ContractId,
+                Balance = TestData.Balance,
                 EstateId = TestData.EstateId,
                 ResponseCode = TestData.ResponseCode,
                 ResponseMessage = TestData.ResponseMessage

@@ -33,6 +33,16 @@ namespace VoucherManagementACL.BusinessLogic.Tests
             request.VersionNumber.ShouldBe(TestData.ApplicationVersion);
         }
 
+        [Fact]
+        public void RedeemVoucherRequest_CanBeCreated_IsCreated()
+        {
+            RedeemVoucherRequest request = RedeemVoucherRequest.Create(TestData.EstateId, TestData.ContractId, TestData.VoucherCode);
+
+            request.EstateId.ShouldBe(TestData.EstateId);
+            request.ContractId.ShouldBe(TestData.ContractId);
+            request.VoucherCode.ShouldBe(TestData.VoucherCode);
+        }
+
         #endregion
     }
 }

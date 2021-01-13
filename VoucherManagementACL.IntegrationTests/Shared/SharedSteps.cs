@@ -20,6 +20,7 @@ namespace VoucherManagement.IntegrationTests.Shared
     using SecurityService.DataTransferObjects.Responses;
     using Shouldly;
     using TechTalk.SpecFlow;
+    using VoucherManagementACL.DataTransferObjects.Responses;
     using ClientDetails = Common.ClientDetails;
 
     [Binding]
@@ -439,13 +440,47 @@ namespace VoucherManagement.IntegrationTests.Shared
 
                 response.IsSuccessStatusCode.ShouldBeTrue();
 
-                GetVoucherResponse getVoucherResponse = JsonConvert.DeserializeObject<GetVoucherResponse>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
+                GetVoucherResponseMessage getVoucherResponse = JsonConvert.DeserializeObject<GetVoucherResponseMessage>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
 
                 getVoucherResponse.VoucherCode.ShouldBe(voucher.voucherCode);
                 getVoucherResponse.VoucherId.ShouldBe(voucher.voucherId);
                 getVoucherResponse.Value.ShouldBe(voucher.value);
             }
         }
+
+        [When(@"I redeem the following vouchers the balance will be as expected")]
+        public async Task WhenIRedeemTheFollowingVouchersTheBalanceWillBeAsExpected(Table table)
+        {
+            foreach (TableRow tableRow in table.Rows)
+            {
+                EstateDetails estateDetails = this.TestingContext.GetEstateDetails(tableRow);
+
+                String operatorIdentifier = SpecflowTableHelper.GetStringRowValue(tableRow, "OperatorName");
+                Guid transactionId = Guid.Parse(SpecflowTableHelper.GetStringRowValue(tableRow, "TransactionId"));
+                Decimal balance = SpecflowTableHelper.GetDecimalValue(tableRow, "Balance");
+
+                (Guid transactionId, Decimal value, String voucherCode, Guid voucherId) voucher = estateDetails.GetVoucher(operatorIdentifier, transactionId);
+
+                // Build URI 
+                String uri = $"api/vouchers?applicationVersion=1.0.0&voucherCode={voucher.voucherCode}";
+
+                String accessToken = estateDetails.GetVoucherRedemptionUserToken(operatorIdentifier);
+
+                StringContent content = new StringContent(String.Empty);
+
+                this.TestingContext.DockerHelper.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+                HttpResponseMessage response = await this.TestingContext.DockerHelper.HttpClient.PutAsync(uri, content, CancellationToken.None).ConfigureAwait(false);
+
+                response.IsSuccessStatusCode.ShouldBeTrue();
+
+                RedeemVoucherResponseMessage redeemVoucherResponse = JsonConvert.DeserializeObject<RedeemVoucherResponseMessage>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
+
+                redeemVoucherResponse.Balance.ShouldBe(balance);
+                redeemVoucherResponse.VoucherCode.ShouldBe(voucher.voucherCode);
+            }
+        }
+
 
         [Given(@"I have created the following security users")]
         public async Task GivenIHaveCreatedTheFollowingSecurityUsers(Table table)

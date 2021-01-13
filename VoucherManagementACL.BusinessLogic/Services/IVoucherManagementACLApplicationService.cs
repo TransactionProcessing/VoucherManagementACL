@@ -20,6 +20,19 @@
                                             Guid contractId,
                                             String voucherCode,
                                             CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Redeems the voucher.
+        /// </summary>
+        /// <param name="estateId">The estate identifier.</param>
+        /// <param name="contractId">The contract identifier.</param>
+        /// <param name="voucherCode">The voucher code.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
+        Task<RedeemVoucherResponse> RedeemVoucher(Guid estateId,
+                                            Guid contractId,
+                                            String voucherCode,
+                                            CancellationToken cancellationToken);
     }
 
 

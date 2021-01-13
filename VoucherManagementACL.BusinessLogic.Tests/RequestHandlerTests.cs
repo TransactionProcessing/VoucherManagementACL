@@ -47,6 +47,20 @@ namespace VoucherManagementACL.BusinessLogic.Tests
                             });
         }
 
+        [Fact]
+        public async Task VoucherRequestHandler_RedeemVoucherRequest_Handle_RequestIsHandled()
+        {
+            Mock<IVoucherManagementACLApplicationService> voucherManagementACLApplicationService = new Mock<IVoucherManagementACLApplicationService>();
+            VoucherRequestHandler requestHandler = new VoucherRequestHandler(voucherManagementACLApplicationService.Object);
+
+            RedeemVoucherRequest request = RedeemVoucherRequest.Create(TestData.EstateId, TestData.ContractId, TestData.VoucherCode);
+
+            Should.NotThrow(async () =>
+                            {
+                                await requestHandler.Handle(request, CancellationToken.None);
+                            });
+        }
+
 
         [Fact]
         public async Task VersionCheckRequestHandler_Handle_RequestIsHandled()

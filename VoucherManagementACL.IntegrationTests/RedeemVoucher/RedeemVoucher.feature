@@ -1,5 +1,5 @@
 ﻿@base @shared
-Feature: IssueVoucher
+Feature: RedeemVoucher
 
 Background: 
 
@@ -45,17 +45,17 @@ Background:
 	| Test Estate 2 | Voucher | 20.00 | 7351e047-8f31-4472-a294-787caa5fb738 |                                | 123456788       |
 
 @PRTest
-Scenario: Get Vouchers
+Scenario: Redeem Vouchers
 	Given I am logged in as "redemptionuser@testredemption1.co.uk" with password "123456" for Estate "Test Estate 1" with client "redemptionClient"
 
-	When I get the following vouchers the voucher is returned
-	| EstateName    | OperatorName    | Value | TransactionId                        |
-	| Test Estate 1 | Voucher | 10.00 | 19f2776a-4230-40d4-8cd2-3649e18732e0 |
-	| Test Estate 1 | Voucher | 20.00 | 6351e047-8f31-4472-a294-787caa5fb738 |
+	When I redeem the following vouchers the balance will be as expected
+	| EstateName    | OperatorName | TransactionId                        | Balance |
+	| Test Estate 1 | Voucher      | 19f2776a-4230-40d4-8cd2-3649e18732e0 | 0       |
+	| Test Estate 1 | Voucher      | 6351e047-8f31-4472-a294-787caa5fb738 | 0       |
 
 	Given I am logged in as "redemptionuser@testredemption2.co.uk" with password "123456" for Estate "Test Estate 2" with client "redemptionClient"
 
-	When I get the following vouchers the voucher is returned
-	| EstateName    | OperatorName | Value | TransactionId                        |
-	| Test Estate 2 | Voucher      | 10.00 | 29f2776a-4230-40d4-8cd2-3649e18732e0 |
-	| Test Estate 2 | Voucher      | 20.00 | 7351e047-8f31-4472-a294-787caa5fb738 |
+	When I redeem the following vouchers the balance will be as expected
+	| EstateName    | OperatorName | TransactionId                        |Balance |
+	| Test Estate 2 | Voucher      | 29f2776a-4230-40d4-8cd2-3649e18732e0 |0       |
+	| Test Estate 2 | Voucher      | 7351e047-8f31-4472-a294-787caa5fb738 |0       |

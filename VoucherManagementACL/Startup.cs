@@ -71,6 +71,7 @@ namespace VoucherManagementACL
             services.AddSingleton<IModelFactory, ModelFactory>();
             services.AddSingleton<IRequestHandler<VersionCheckRequest,Unit>, VersionCheckRequestHandler>();
             services.AddSingleton<IRequestHandler<GetVoucherRequest, GetVoucherResponse>, VoucherRequestHandler>();
+            services.AddSingleton<IRequestHandler<RedeemVoucherRequest, RedeemVoucherResponse>, VoucherRequestHandler>();
             services.AddSingleton<IVoucherManagementACLApplicationService, VoucherManagementACLApplicationService>();
             services.AddSingleton<ISecurityServiceClient, SecurityServiceClient>();
             services.AddSingleton<IVoucherManagementClient, VoucherManagementClient>();

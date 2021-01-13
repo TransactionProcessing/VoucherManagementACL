@@ -17,6 +17,13 @@
         /// <returns></returns>
         GetVoucherResponseMessage ConvertFrom(GetVoucherResponse model);
 
+        /// <summary>
+        /// Converts from.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
+        RedeemVoucherResponseMessage ConvertFrom(RedeemVoucherResponse model);
+
         #endregion
     }
 }

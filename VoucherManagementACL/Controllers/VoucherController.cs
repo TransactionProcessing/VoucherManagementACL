@@ -12,6 +12,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Models;
+    using Newtonsoft.Json;
     using Shared.Logger;
 
     /// <summary>
@@ -97,7 +98,41 @@
 
             return this.Ok(this.ModelFactory.ConvertFrom(response));
         }
-        
+
+        [HttpPut]
+        [Route("")]
+        public async Task<IActionResult> RedeemVoucher([FromQuery] String voucherCode,
+                                                    [FromQuery] String applicationVersion,
+                                                    CancellationToken cancellationToken)
+        {
+            if (ClaimsHelper.IsPasswordToken(this.User) == false)
+            {
+                return this.Forbid();
+            }
+
+            // Do the software version check
+            try
+            {
+                VersionCheckRequest versionCheckRequest = VersionCheckRequest.Create(applicationVersion);
+                await this.Mediator.Send(versionCheckRequest, cancellationToken);
+            }
+            catch (VersionIncompatibleException vex)
+            {
+                Logger.LogError(vex);
+                return this.StatusCode(505);
+            }
+
+            Guid estateId = Guid.Parse(ClaimsHelper.GetUserClaim(this.User, "EstateId").Value);
+            Guid contractId = Guid.Parse(ClaimsHelper.GetUserClaim(this.User, "ContractId").Value);
+
+            // Now do the GET
+            RedeemVoucherRequest request = RedeemVoucherRequest.Create(estateId, contractId, voucherCode);
+
+            RedeemVoucherResponse response = await this.Mediator.Send(request, cancellationToken);
+
+            return this.Ok(this.ModelFactory.ConvertFrom(response));
+        }
+
 
         #endregion
 
