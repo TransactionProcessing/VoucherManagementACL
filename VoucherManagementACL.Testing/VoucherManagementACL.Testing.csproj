@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <DebugType>None</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VoucherManagementACL.BusinessLogic\VoucherManagementACL.BusinessLogic.csproj" />
+    <ProjectReference Include="..\VoucherManagementACL.DataTransferObjects\VoucherManagementACL.DataTransferObjects.csproj" />
+    <ProjectReference Include="..\VoucherManagementACL.Models\VoucherManagementACL.Models.csproj" />
+  </ItemGroup>
+
+</Project>

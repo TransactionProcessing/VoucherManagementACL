@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="SecurityService.Client" Version="1.0.4" />
+    <PackageReference Include="Shared" Version="1.0.1" />
+    <PackageReference Include="VoucherManagement.Client" Version="1.0.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VoucherManagementACL.Models\VoucherManagementACL.Models.csproj" />
+  </ItemGroup>
+
+</Project>

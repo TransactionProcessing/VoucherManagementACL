@@ -1,0 +1,81 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29509.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VoucherManagementACL", "VoucherManagementACL\VoucherManagementACL.csproj", "{E4C9177E-C366-4236-9CE2-234C259A41BF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{AC782193-CA63-4F5C-91B0-CE0E9802DE3E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VoucherManagementACL.DataTransferObjects", "VoucherManagementACL.DataTransferObjects\VoucherManagementACL.DataTransferObjects.csproj", "{E407F793-58BE-4028-947A-2DAB4D5378EC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VoucherManagementACL.BusinessLogic", "VoucherManagementACL.BusinessLogic\VoucherManagementACL.BusinessLogic.csproj", "{245E58CB-145A-4EFE-802E-E409955499D3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VoucherManagementACL.Models", "VoucherManagementACL.Models\VoucherManagementACL.Models.csproj", "{EB2C5C28-064C-4382-AD6F-C01C6EB9615D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{F4C740F9-3213-4C68-9DFA-1B1ECCEE647E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VoucherManagementACL.Tests", "VoucherManagementACL.Tests\VoucherManagementACL.Tests.csproj", "{4D4F3A13-B3F8-4859-9C29-F7003EE83E9A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VoucherManagementACL.Testing", "VoucherManagementACL.Testing\VoucherManagementACL.Testing.csproj", "{0A0C37A7-E80B-4037-9B35-0CA9245EEB02}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VoucherManagementACL.BusinessLogic.Tests", "VoucherManagementACL.BusinessLogic.Tests\VoucherManagementACL.BusinessLogic.Tests.csproj", "{942EAEA0-E723-4363-BE7C-6A05C9443C8C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VoucherManagementACL.IntegrationTests", "VoucherManagementACL.IntegrationTests\VoucherManagementACL.IntegrationTests.csproj", "{3C89E961-F954-4125-87A5-3808E5E51441}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E4C9177E-C366-4236-9CE2-234C259A41BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4C9177E-C366-4236-9CE2-234C259A41BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4C9177E-C366-4236-9CE2-234C259A41BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4C9177E-C366-4236-9CE2-234C259A41BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E407F793-58BE-4028-947A-2DAB4D5378EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E407F793-58BE-4028-947A-2DAB4D5378EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E407F793-58BE-4028-947A-2DAB4D5378EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E407F793-58BE-4028-947A-2DAB4D5378EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{245E58CB-145A-4EFE-802E-E409955499D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{245E58CB-145A-4EFE-802E-E409955499D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{245E58CB-145A-4EFE-802E-E409955499D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{245E58CB-145A-4EFE-802E-E409955499D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB2C5C28-064C-4382-AD6F-C01C6EB9615D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB2C5C28-064C-4382-AD6F-C01C6EB9615D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB2C5C28-064C-4382-AD6F-C01C6EB9615D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB2C5C28-064C-4382-AD6F-C01C6EB9615D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D4F3A13-B3F8-4859-9C29-F7003EE83E9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D4F3A13-B3F8-4859-9C29-F7003EE83E9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D4F3A13-B3F8-4859-9C29-F7003EE83E9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D4F3A13-B3F8-4859-9C29-F7003EE83E9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A0C37A7-E80B-4037-9B35-0CA9245EEB02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A0C37A7-E80B-4037-9B35-0CA9245EEB02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A0C37A7-E80B-4037-9B35-0CA9245EEB02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A0C37A7-E80B-4037-9B35-0CA9245EEB02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{942EAEA0-E723-4363-BE7C-6A05C9443C8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{942EAEA0-E723-4363-BE7C-6A05C9443C8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{942EAEA0-E723-4363-BE7C-6A05C9443C8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{942EAEA0-E723-4363-BE7C-6A05C9443C8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C89E961-F954-4125-87A5-3808E5E51441}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C89E961-F954-4125-87A5-3808E5E51441}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C89E961-F954-4125-87A5-3808E5E51441}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C89E961-F954-4125-87A5-3808E5E51441}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E4C9177E-C366-4236-9CE2-234C259A41BF} = {AC782193-CA63-4F5C-91B0-CE0E9802DE3E}
+		{E407F793-58BE-4028-947A-2DAB4D5378EC} = {AC782193-CA63-4F5C-91B0-CE0E9802DE3E}
+		{245E58CB-145A-4EFE-802E-E409955499D3} = {AC782193-CA63-4F5C-91B0-CE0E9802DE3E}
+		{EB2C5C28-064C-4382-AD6F-C01C6EB9615D} = {AC782193-CA63-4F5C-91B0-CE0E9802DE3E}
+		{4D4F3A13-B3F8-4859-9C29-F7003EE83E9A} = {F4C740F9-3213-4C68-9DFA-1B1ECCEE647E}
+		{0A0C37A7-E80B-4037-9B35-0CA9245EEB02} = {F4C740F9-3213-4C68-9DFA-1B1ECCEE647E}
+		{942EAEA0-E723-4363-BE7C-6A05C9443C8C} = {F4C740F9-3213-4C68-9DFA-1B1ECCEE647E}
+		{3C89E961-F954-4125-87A5-3808E5E51441} = {F4C740F9-3213-4C68-9DFA-1B1ECCEE647E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D7348E19-B39B-4769-834E-D70D74676E81}
+	EndGlobalSection
+EndGlobal
