@@ -163,7 +163,8 @@
                              ExpiryDate = getVoucherResponse.ExpiryDate,
                              Value = getVoucherResponse.Value,
                              VoucherCode = getVoucherResponse.VoucherCode,
-                             VoucherId = getVoucherResponse.VoucherId
+                             VoucherId = getVoucherResponse.VoucherId,
+                             Balance = getVoucherResponse.Balance
                          };
             }
             catch (Exception ex)

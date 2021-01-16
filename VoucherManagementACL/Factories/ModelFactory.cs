@@ -33,7 +33,8 @@
                                                             ExpiryDate = model.ExpiryDate,
                                                             Value = model.Value,
                                                             ResponseMessage = model.ResponseMessage,
-                                                            ResponseCode = model.ResponseCode
+                                                            ResponseCode = model.ResponseCode,
+                                                            Balance = model.Balance
                                                         };
 
             return responseMessage;

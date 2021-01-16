@@ -60,6 +60,14 @@
         public Decimal Value { get; set; }
 
         /// <summary>
+        /// Gets or sets the balance.
+        /// </summary>
+        /// <value>
+        /// The balance.
+        /// </value>
+        public Decimal Balance { get; set; }
+
+        /// <summary>
         /// Gets or sets the voucher code.
         /// </summary>
         /// <value>

@@ -80,7 +80,8 @@
                 VoucherId = TestData.VoucherId,
                 EstateId = TestData.EstateId,
                 ResponseCode = TestData.ResponseCode,
-                ResponseMessage = TestData.ResponseMessage
+                ResponseMessage = TestData.ResponseMessage,
+                Balance = TestData.Balance
             };
 
         public static Models.RedeemVoucherResponse RedeemVoucherResponseModel =>
