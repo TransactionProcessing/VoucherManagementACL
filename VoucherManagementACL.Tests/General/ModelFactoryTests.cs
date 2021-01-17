@@ -26,6 +26,7 @@
             dto.VoucherId.ShouldBe(model.VoucherId);
             dto.ResponseMessage.ShouldBe(model.ResponseMessage);
             dto.ResponseCode.ShouldBe(model.ResponseCode);
+            dto.Balance.ShouldBe(model.Balance);
         }
 
         [Fact]
