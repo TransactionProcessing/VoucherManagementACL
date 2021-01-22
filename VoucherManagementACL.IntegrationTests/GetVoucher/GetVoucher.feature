@@ -7,6 +7,12 @@ Background:
 	| RoleName |
 	| VoucherRedemption   |
 
+	Given I create the following api scopes
+	| Name                 | DisplayName                       | Description                            |
+	| estateManagement     | Estate Managememt REST Scope      | A scope for Estate Managememt REST     |
+	| voucherManagement | Voucher Management REST  Scope | A scope for Voucher Management REST |
+	| voucherManagementACL | Voucher Management ACL REST  Scope | A scope for Voucher Management ACL REST |
+
 	Given the following api resources exist
 	| ResourceName     | DisplayName            | Secret  | Scopes           | UserClaims                 |
 	| estateManagement | Estate Managememt REST | Secret1 | estateManagement | MerchantId, EstateId, role |
