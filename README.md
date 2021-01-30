@@ -2,8 +2,8 @@
 
 ## Build Status
 
-[![Last Nightly Build Status Badge](https://github.com/StuartFerguson/VoucherManagementACL/workflows/Nightly%20Build/badge.svg)](https://github.com/StuartFerguson/VoucherManagementACL/workflows/Nightly%20Build/badge.svg)
-[![Last Release Build Status Badge](https://github.com/StuartFerguson/VoucherManagementACL/workflows/Release/badge.svg)](https://github.com/StuartFerguson/VoucherManagementACL/workflows/Release/badge.svg)
+[![Last Nightly Build Status Badge](https://github.com/StuartFerguson/VoucherManagementACL/workflows/Nightly%20Build/badge.svg)](https://github.com/TransactionProcessing/VoucherManagementACL/workflows/Nightly%20Build/badge.svg)
+[![Last Release Build Status Badge](https://github.com/StuartFerguson/VoucherManagementACL/workflows/Release/badge.svg)](https://github.com/TransactionProcessing/VoucherManagementACL/workflows/Release/badge.svg)
 
 
 ## Nuget Versions
@@ -17,4 +17,4 @@
 
 ## Code Quality Results
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0c614670e9e34ddba1d04c0d790fc969)](https://www.codacy.com/manual/stuart_ferguson1/VoucherManagementACL?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=StuartFerguson/VoucherManagementACL&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0c614670e9e34ddba1d04c0d790fc969)](https://www.codacy.com/manual/stuart_ferguson1/VoucherManagementACL?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=TransactionProcessing/VoucherManagementACL&amp;utm_campaign=Badge_Grade)
