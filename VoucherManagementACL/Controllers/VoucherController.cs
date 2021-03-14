@@ -88,8 +88,8 @@
                 return this.StatusCode(505);
             }
 
-            Guid estateId = Guid.Parse(ClaimsHelper.GetUserClaim(this.User, "EstateId").Value);
-            Guid contractId = Guid.Parse(ClaimsHelper.GetUserClaim(this.User, "ContractId").Value);
+            Guid estateId = Guid.Parse(ClaimsHelper.GetUserClaim(this.User, "estateId").Value);
+            Guid contractId = Guid.Parse(ClaimsHelper.GetUserClaim(this.User, "contractId").Value);
 
             // Now do the GET
             GetVoucherRequest request = GetVoucherRequest.Create(estateId, contractId, voucherCode);
@@ -122,8 +122,8 @@
                 return this.StatusCode(505);
             }
 
-            Guid estateId = Guid.Parse(ClaimsHelper.GetUserClaim(this.User, "EstateId").Value);
-            Guid contractId = Guid.Parse(ClaimsHelper.GetUserClaim(this.User, "ContractId").Value);
+            Guid estateId = Guid.Parse(ClaimsHelper.GetUserClaim(this.User, "estateId").Value);
+            Guid contractId = Guid.Parse(ClaimsHelper.GetUserClaim(this.User, "contractId").Value);
 
             // Now do the GET
             RedeemVoucherRequest request = RedeemVoucherRequest.Create(estateId, contractId, voucherCode);
