@@ -340,7 +340,8 @@ namespace VoucherManagement.IntegrationTests.Common
                                                                                                         this.EstateManagementContainerName,
                                                                                                         eventStoreAddress,
                                                                                                         (Setup.SqlServerContainerName, "sa", "thisisalongpassword123!"),
-                                                                                                        ("serviceClient", "Secret1"));
+                                                                                                        ("serviceClient", "Secret1"),
+                                                                                                        true);
 
             IContainerService voucherManagementAclContainer = SetupVoucherManagementACLContainer(this.VoucherManagementACLContainerName,
                                                                                                  this.Logger,
