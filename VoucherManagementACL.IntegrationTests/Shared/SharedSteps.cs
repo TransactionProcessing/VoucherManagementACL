@@ -435,6 +435,14 @@ namespace VoucherManagement.IntegrationTests.Shared
 
                 response.VoucherId.ShouldNotBe(Guid.Empty);
 
+                await Retry.For(async () =>
+                                {
+                                    var v = await this.TestingContext.DockerHelper.VoucherManagementClient
+                                              .GetVoucher(this.TestingContext.AccessToken, estateDetails.EstateId, response.VoucherCode, CancellationToken.None)
+                                              .ConfigureAwait(false);
+                                    v.ShouldNotBeNull();
+                                });
+
                 estateDetails.AddVoucher(request.OperatorIdentifier,
                                          request.Value,
                                          request.TransactionId,
@@ -464,6 +472,8 @@ namespace VoucherManagement.IntegrationTests.Shared
 
                 HttpResponseMessage response = await this.TestingContext.DockerHelper.HttpClient.GetAsync(uri, CancellationToken.None).ConfigureAwait(false);
 
+                String content = await response.Content.ReadAsStringAsync(CancellationToken.None).ConfigureAwait(false);
+                
                 response.IsSuccessStatusCode.ShouldBeTrue();
 
                 GetVoucherResponseMessage getVoucherResponse = JsonConvert.DeserializeObject<GetVoucherResponseMessage>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -535,8 +545,8 @@ namespace VoucherManagement.IntegrationTests.Shared
                                                                   },
                                                           Claims = new Dictionary<String, String>
                                                                    {
-                                                                       {"EstateId", estateDetails.EstateId.ToString()},
-                                                                       {"ContractId", estateDetails.EstateId.ToString()}
+                                                                       {"estateId", estateDetails.EstateId.ToString()},
+                                                                       {"contractId", estateDetails.EstateId.ToString()}
                                                                    }
                 };
 

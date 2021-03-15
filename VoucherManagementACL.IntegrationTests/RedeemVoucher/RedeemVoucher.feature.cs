@@ -85,156 +85,175 @@ namespace VoucherManagementACL.IntegrationTests.RedeemVoucher
         {
 #line 4
 #line hidden
-            TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
                         "RoleName"});
-            table11.AddRow(new string[] {
+            table12.AddRow(new string[] {
                         "VoucherRedemption"});
 #line 6
- testRunner.Given("the following security roles exist", ((string)(null)), table11, "Given ");
+ testRunner.Given("the following security roles exist", ((string)(null)), table12, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
+                        "DisplayName",
+                        "Description"});
+            table13.AddRow(new string[] {
+                        "estateManagement",
+                        "Estate Managememt REST Scope",
+                        "A scope for Estate Managememt REST"});
+            table13.AddRow(new string[] {
+                        "voucherManagement",
+                        "Voucher Management REST  Scope",
+                        "A scope for Voucher Management REST"});
+            table13.AddRow(new string[] {
+                        "voucherManagementACL",
+                        "Voucher Management ACL REST  Scope",
+                        "A scope for Voucher Management ACL REST"});
+#line 10
+ testRunner.Given("I create the following api scopes", ((string)(null)), table13, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
                         "ResourceName",
                         "DisplayName",
                         "Secret",
                         "Scopes",
                         "UserClaims"});
-            table12.AddRow(new string[] {
+            table14.AddRow(new string[] {
                         "estateManagement",
                         "Estate Managememt REST",
                         "Secret1",
                         "estateManagement",
                         "MerchantId, EstateId, role"});
-            table12.AddRow(new string[] {
+            table14.AddRow(new string[] {
                         "voucherManagement",
                         "Voucher Management REST",
                         "Secret1",
                         "voucherManagement",
                         ""});
-            table12.AddRow(new string[] {
+            table14.AddRow(new string[] {
                         "voucherManagementACL",
                         "Voucher Management ACL REST",
                         "Secret1",
                         "voucherManagementACL",
                         "EstateId, role, ContractId"});
-#line 10
- testRunner.Given("the following api resources exist", ((string)(null)), table12, "Given ");
+#line 16
+ testRunner.Given("the following api resources exist", ((string)(null)), table14, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table15 = new TechTalk.SpecFlow.Table(new string[] {
                         "ClientId",
                         "ClientName",
                         "Secret",
                         "AllowedScopes",
                         "AllowedGrantTypes"});
-            table13.AddRow(new string[] {
+            table15.AddRow(new string[] {
                         "serviceClient",
                         "Service Client",
                         "Secret1",
                         "estateManagement,voucherManagement",
                         "client_credentials"});
-            table13.AddRow(new string[] {
+            table15.AddRow(new string[] {
                         "redemptionClient",
                         "Redemption Client",
                         "Secret1",
                         "voucherManagementACL",
                         "password"});
-#line 16
- testRunner.Given("the following clients exist", ((string)(null)), table13, "Given ");
-#line hidden
-            TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
-                        "ClientId"});
-            table14.AddRow(new string[] {
-                        "serviceClient"});
-#line 21
- testRunner.Given("I have a token to access the estate management and voucher management resources", ((string)(null)), table14, "Given ");
-#line hidden
-            TechTalk.SpecFlow.Table table15 = new TechTalk.SpecFlow.Table(new string[] {
-                        "EstateName"});
-            table15.AddRow(new string[] {
-                        "Test Estate 1"});
-            table15.AddRow(new string[] {
-                        "Test Estate 2"});
-#line 25
- testRunner.Given("I have created the following estates", ((string)(null)), table15, "Given ");
+#line 22
+ testRunner.Given("the following clients exist", ((string)(null)), table15, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table16 = new TechTalk.SpecFlow.Table(new string[] {
+                        "ClientId"});
+            table16.AddRow(new string[] {
+                        "serviceClient"});
+#line 27
+ testRunner.Given("I have a token to access the estate management and voucher management resources", ((string)(null)), table16, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table17 = new TechTalk.SpecFlow.Table(new string[] {
+                        "EstateName"});
+            table17.AddRow(new string[] {
+                        "Test Estate 1"});
+            table17.AddRow(new string[] {
+                        "Test Estate 2"});
+#line 31
+ testRunner.Given("I have created the following estates", ((string)(null)), table17, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table18 = new TechTalk.SpecFlow.Table(new string[] {
                         "EmailAddress",
                         "Password",
                         "GivenName",
                         "FamilyName",
                         "EstateName",
                         "RoleName"});
-            table16.AddRow(new string[] {
+            table18.AddRow(new string[] {
                         "redemptionuser@testredemption1.co.uk",
                         "123456",
                         "TestRedemption",
                         "User1",
                         "Test Estate 1",
                         "VoucherRedemption"});
-            table16.AddRow(new string[] {
+            table18.AddRow(new string[] {
                         "redemptionuser@testredemption2.co.uk",
                         "123456",
                         "TestRedemption",
                         "User2",
                         "Test Estate 2",
                         "VoucherRedemption"});
-#line 30
- testRunner.Given("I have created the following security users", ((string)(null)), table16, "Given ");
+#line 36
+ testRunner.Given("I have created the following security users", ((string)(null)), table18, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table17 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
                         "EstateName",
                         "OperatorName",
                         "RequireCustomMerchantNumber",
                         "RequireCustomTerminalNumber"});
-            table17.AddRow(new string[] {
+            table19.AddRow(new string[] {
                         "Test Estate 1",
                         "Voucher",
                         "True",
                         "True"});
-            table17.AddRow(new string[] {
+            table19.AddRow(new string[] {
                         "Test Estate 2",
                         "Voucher",
                         "True",
                         "True"});
-#line 35
- testRunner.Given("I have created the following operators", ((string)(null)), table17, "Given ");
+#line 41
+ testRunner.Given("I have created the following operators", ((string)(null)), table19, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table18 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
                         "EstateName",
                         "OperatorName",
                         "Value",
                         "TransactionId",
                         "RecipientEmail",
                         "RecipientMobile"});
-            table18.AddRow(new string[] {
+            table20.AddRow(new string[] {
                         "Test Estate 1",
                         "Voucher",
                         "10.00",
                         "19f2776a-4230-40d4-8cd2-3649e18732e0",
                         "testrecipient1@recipient.co.uk",
                         ""});
-            table18.AddRow(new string[] {
+            table20.AddRow(new string[] {
                         "Test Estate 1",
                         "Voucher",
                         "20.00",
                         "6351e047-8f31-4472-a294-787caa5fb738",
                         "",
                         "123456788"});
-            table18.AddRow(new string[] {
+            table20.AddRow(new string[] {
                         "Test Estate 2",
                         "Voucher",
                         "10.00",
                         "29f2776a-4230-40d4-8cd2-3649e18732e0",
                         "testrecipient1@recipient.co.uk",
                         ""});
-            table18.AddRow(new string[] {
+            table20.AddRow(new string[] {
                         "Test Estate 2",
                         "Voucher",
                         "20.00",
                         "7351e047-8f31-4472-a294-787caa5fb738",
                         "",
                         "123456788"});
-#line 40
- testRunner.When("I issue the following vouchers", ((string)(null)), table18, "When ");
+#line 46
+ testRunner.When("I issue the following vouchers", ((string)(null)), table20, "When ");
 #line hidden
         }
         
@@ -253,7 +272,7 @@ namespace VoucherManagementACL.IntegrationTests.RedeemVoucher
                     "PRTest"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Redeem Vouchers", null, tagsOfScenario, argumentsOfScenario);
-#line 48
+#line 54
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -276,49 +295,49 @@ this.ScenarioInitialize(scenarioInfo);
 #line 4
 this.FeatureBackground();
 #line hidden
-#line 49
+#line 55
  testRunner.Given("I am logged in as \"redemptionuser@testredemption1.co.uk\" with password \"123456\" f" +
                         "or Estate \"Test Estate 1\" with client \"redemptionClient\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-                TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
                             "EstateName",
                             "OperatorName",
                             "TransactionId",
                             "Balance"});
-                table19.AddRow(new string[] {
+                table21.AddRow(new string[] {
                             "Test Estate 1",
                             "Voucher",
                             "19f2776a-4230-40d4-8cd2-3649e18732e0",
                             "0"});
-                table19.AddRow(new string[] {
+                table21.AddRow(new string[] {
                             "Test Estate 1",
                             "Voucher",
                             "6351e047-8f31-4472-a294-787caa5fb738",
                             "0"});
-#line 51
- testRunner.When("I redeem the following vouchers the balance will be as expected", ((string)(null)), table19, "When ");
+#line 57
+ testRunner.When("I redeem the following vouchers the balance will be as expected", ((string)(null)), table21, "When ");
 #line hidden
-#line 56
+#line 62
  testRunner.Given("I am logged in as \"redemptionuser@testredemption2.co.uk\" with password \"123456\" f" +
                         "or Estate \"Test Estate 2\" with client \"redemptionClient\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-                TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
                             "EstateName",
                             "OperatorName",
                             "TransactionId",
                             "Balance"});
-                table20.AddRow(new string[] {
+                table22.AddRow(new string[] {
                             "Test Estate 2",
                             "Voucher",
                             "29f2776a-4230-40d4-8cd2-3649e18732e0",
                             "0"});
-                table20.AddRow(new string[] {
+                table22.AddRow(new string[] {
                             "Test Estate 2",
                             "Voucher",
                             "7351e047-8f31-4472-a294-787caa5fb738",
                             "0"});
-#line 58
- testRunner.When("I redeem the following vouchers the balance will be as expected", ((string)(null)), table20, "When ");
+#line 64
+ testRunner.When("I redeem the following vouchers the balance will be as expected", ((string)(null)), table22, "When ");
 #line hidden
             }
             this.ScenarioCleanup();

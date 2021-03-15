@@ -4,6 +4,7 @@
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Security.Claims;
+    using System.Text;
     using Shared.Exceptions;
 
     [ExcludeFromCodeCoverage]
@@ -28,8 +29,8 @@
             if (ClaimsHelper.IsPasswordToken(user))
             {
                 // Get the claim from the token
-                userClaim = user.Claims.SingleOrDefault(c => c.Type == customClaimType);
-
+                userClaim = user.Claims.SingleOrDefault(c => c.Type.ToLower() == customClaimType.ToLower());
+                
                 if (userClaim == null)
                 {
                     throw new NotFoundException($"Claim type [{customClaimType}] not found");
