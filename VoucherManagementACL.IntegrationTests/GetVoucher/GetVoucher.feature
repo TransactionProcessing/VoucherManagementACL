@@ -15,9 +15,9 @@ Background:
 
 	Given the following api resources exist
 	| ResourceName     | DisplayName            | Secret  | Scopes           | UserClaims                 |
-	| estateManagement | Estate Managememt REST | Secret1 | estateManagement | MerchantId, EstateId, role |
+	| estateManagement | Estate Managememt REST | Secret1 | estateManagement | merchantId, estateId, role |
 	| voucherManagement | Voucher Management REST | Secret1 | voucherManagement |  |
-	| voucherManagementACL | Voucher Management ACL REST | Secret1 | voucherManagementACL | EstateId, role, ContractId |
+	| voucherManagementACL | Voucher Management ACL REST | Secret1 | voucherManagementACL | estateId, role, contractId |
 
 	Given the following clients exist
 	| ClientId         | ClientName        | Secret  | AllowedScopes                      | AllowedGrantTypes  |
