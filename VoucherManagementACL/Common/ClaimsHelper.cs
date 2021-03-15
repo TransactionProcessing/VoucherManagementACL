@@ -33,13 +33,7 @@
                 
                 if (userClaim == null)
                 {
-                    StringBuilder claims = new();
-                    foreach (var claim in user.Claims)
-                    {
-                        claims.AppendJoin(",", claim);
-                    }
-
-                    throw new NotFoundException($"Claim type [{customClaimType}] not found, [{claims}]");
+                    throw new NotFoundException($"Claim type [{customClaimType}] not found");
                 }
             }
             else

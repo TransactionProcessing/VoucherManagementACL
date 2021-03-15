@@ -473,8 +473,7 @@ namespace VoucherManagement.IntegrationTests.Shared
                 HttpResponseMessage response = await this.TestingContext.DockerHelper.HttpClient.GetAsync(uri, CancellationToken.None).ConfigureAwait(false);
 
                 String content = await response.Content.ReadAsStringAsync(CancellationToken.None).ConfigureAwait(false);
-                Console.WriteLine($"Status Code {response.StatusCode} Content {content}");
-
+                
                 response.IsSuccessStatusCode.ShouldBeTrue();
 
                 GetVoucherResponseMessage getVoucherResponse = JsonConvert.DeserializeObject<GetVoucherResponseMessage>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
