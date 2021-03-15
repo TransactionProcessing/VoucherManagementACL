@@ -546,8 +546,8 @@ namespace VoucherManagement.IntegrationTests.Shared
                                                                   },
                                                           Claims = new Dictionary<String, String>
                                                                    {
-                                                                       {"EstateId", estateDetails.EstateId.ToString()},
-                                                                       {"ContractId", estateDetails.EstateId.ToString()}
+                                                                       {"estateId", estateDetails.EstateId.ToString()},
+                                                                       {"contractId", estateDetails.EstateId.ToString()}
                                                                    }
                 };
 
