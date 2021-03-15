@@ -338,7 +338,7 @@ namespace VoucherManagement.IntegrationTests.Common
                                                                                                         dockerCredentials,
                                                                                                         this.SecurityServiceContainerName,
                                                                                                         this.EstateManagementContainerName,
-                                                                                                        this.EventStoreContainerName,
+                                                                                                        eventStoreAddress,
                                                                                                         (Setup.SqlServerContainerName, "sa", "thisisalongpassword123!"),
                                                                                                         ("serviceClient", "Secret1"));
 
@@ -409,6 +409,11 @@ namespace VoucherManagement.IntegrationTests.Common
             EventStorePersistentSubscriptionsClient client = new EventStorePersistentSubscriptionsClient(ConfigureEventStoreSettings(this.EventStoreHttpPort));
 
             PersistentSubscriptionSettings settings = new PersistentSubscriptionSettings(resolveLinkTos: true);
+
+            await client.CreateAsync("$ce-EstateAggregate", "Reporting", settings);
+            await client.CreateAsync("$ce-MerchantAggregate", "Reporting", settings);
+            await client.CreateAsync("$ce-ContractAggregate", "Reporting", settings);
+            await client.CreateAsync("$ce-VoucherAggregate", "Reporting", settings);
         }
 
         private static EventStoreClientSettings ConfigureEventStoreSettings(Int32 eventStoreHttpPort)
