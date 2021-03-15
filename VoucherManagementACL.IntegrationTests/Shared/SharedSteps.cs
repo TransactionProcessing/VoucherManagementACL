@@ -435,6 +435,13 @@ namespace VoucherManagement.IntegrationTests.Shared
 
                 response.VoucherId.ShouldNotBe(Guid.Empty);
 
+                await Retry.For(async () =>
+                                {
+                                    await this.TestingContext.DockerHelper.VoucherManagementClient
+                                              .GetVoucher(this.TestingContext.AccessToken, estateDetails.EstateId, response.VoucherCode, CancellationToken.None)
+                                              .ConfigureAwait(false);
+                                });
+
                 estateDetails.AddVoucher(request.OperatorIdentifier,
                                          request.Value,
                                          request.TransactionId,
