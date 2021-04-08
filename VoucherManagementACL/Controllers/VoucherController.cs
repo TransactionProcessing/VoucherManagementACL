@@ -26,7 +26,7 @@
     [ExcludeFromCodeCoverage]
     [Route(VoucherController.ControllerRoute)]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class VoucherController : ControllerBase
     {
         #region Fields

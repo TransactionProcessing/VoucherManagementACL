@@ -136,8 +136,15 @@ namespace VoucherManagementACL
                         options.IncludeErrorDetails = true;
                     });
 
-            services.AddControllers();
-                
+            services.AddControllers().AddNewtonsoftJson(options =>
+                                                        {
+                                                            options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                                                            options.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
+                                                            options.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+                                                            options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
+                                                            options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                                                        });
+
             Assembly assembly = this.GetType().GetTypeInfo().Assembly;
             services.AddMvcCore().AddApplicationPart(assembly).AddControllersAsServices();
         }
