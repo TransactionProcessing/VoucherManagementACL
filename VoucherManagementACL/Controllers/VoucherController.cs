@@ -7,6 +7,8 @@
     using BusinessLogic.RequestHandlers;
     using BusinessLogic.Requests;
     using Common;
+    using Common.Examples;
+    using DataTransferObjects.Responses;
     using Factories;
     using MediatR;
     using Microsoft.AspNetCore.Authorization;
@@ -14,6 +16,8 @@
     using Models;
     using Newtonsoft.Json;
     using Shared.Logger;
+    using Swashbuckle.AspNetCore.Annotations;
+    using Swashbuckle.AspNetCore.Filters;
 
     /// <summary>
     /// 
@@ -22,7 +26,6 @@
     [ExcludeFromCodeCoverage]
     [Route(VoucherController.ControllerRoute)]
     [ApiController]
-    [ApiVersion("1.0")]
     [Authorize]
     public class VoucherController : ControllerBase
     {
@@ -67,6 +70,8 @@
         /// <returns></returns>
         [HttpGet]
         [Route("")]
+        [SwaggerResponse(200, type:typeof(GetVoucherResponseMessage))]
+        [SwaggerResponseExample(200, typeof(GetVoucherResponseMessageExample))]
         public async Task<IActionResult> GetVoucher([FromQuery] String voucherCode,
                                                     [FromQuery] String applicationVersion,
                                                     CancellationToken cancellationToken)
@@ -99,8 +104,17 @@
             return this.Ok(this.ModelFactory.ConvertFrom(response));
         }
 
+        /// <summary>
+        /// Redeems the voucher.
+        /// </summary>
+        /// <param name="voucherCode">The voucher code.</param>
+        /// <param name="applicationVersion">The application version.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
         [HttpPut]
         [Route("")]
+        [SwaggerResponse(200, type: typeof(RedeemVoucherResponseMessage))]
+        [SwaggerResponseExample(200, typeof(RedeemVoucherResponseMessageExample))]
         public async Task<IActionResult> RedeemVoucher([FromQuery] String voucherCode,
                                                     [FromQuery] String applicationVersion,
                                                     CancellationToken cancellationToken)
