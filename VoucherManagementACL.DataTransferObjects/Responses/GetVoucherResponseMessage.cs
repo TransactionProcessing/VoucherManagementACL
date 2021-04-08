@@ -5,6 +5,7 @@ using System.Text;
 namespace VoucherManagementACL.DataTransferObjects.Responses
 {
     using System.Diagnostics.CodeAnalysis;
+    using Newtonsoft.Json;
 
     [ExcludeFromCodeCoverage]
     public class GetVoucherResponseMessage
@@ -17,6 +18,7 @@ namespace VoucherManagementACL.DataTransferObjects.Responses
         /// <value>
         /// The response code.
         /// </value>
+        [JsonProperty("response_code")]
         public String ResponseCode { get; set; }
 
         /// <summary>
@@ -25,6 +27,7 @@ namespace VoucherManagementACL.DataTransferObjects.Responses
         /// <value>
         /// The response message.
         /// </value>
+        [JsonProperty("response_message")]
         public String ResponseMessage { get; set; }
 
         /// <summary>
@@ -33,6 +36,7 @@ namespace VoucherManagementACL.DataTransferObjects.Responses
         /// <value>
         /// The contract identifier.
         /// </value>
+        [JsonProperty("contract_id")]
         public Guid ContractId { get; set; }
 
         /// <summary>
@@ -41,6 +45,7 @@ namespace VoucherManagementACL.DataTransferObjects.Responses
         /// <value>
         /// The estate identifier.
         /// </value>
+        [JsonProperty("estate_id")]
         public Guid EstateId { get; set; }
 
         /// <summary>
@@ -49,6 +54,7 @@ namespace VoucherManagementACL.DataTransferObjects.Responses
         /// <value>
         /// The expiry date.
         /// </value>
+        [JsonProperty("expiry_date")]
         public DateTime ExpiryDate { get; set; }
 
         /// <summary>
@@ -57,6 +63,7 @@ namespace VoucherManagementACL.DataTransferObjects.Responses
         /// <value>
         /// The value.
         /// </value>
+        [JsonProperty("value")]
         public Decimal Value { get; set; }
 
         /// <summary>
@@ -65,6 +72,7 @@ namespace VoucherManagementACL.DataTransferObjects.Responses
         /// <value>
         /// The balance.
         /// </value>
+        [JsonProperty("balance")]
         public Decimal Balance { get; set; }
 
         /// <summary>
@@ -73,6 +81,7 @@ namespace VoucherManagementACL.DataTransferObjects.Responses
         /// <value>
         /// The voucher code.
         /// </value>
+        [JsonProperty("voucher_code")]
         public String VoucherCode { get; set; }
 
         /// <summary>
@@ -81,6 +90,7 @@ namespace VoucherManagementACL.DataTransferObjects.Responses
         /// <value>
         /// The voucher identifier.
         /// </value>
+        [JsonProperty("voucher_id")]
         public Guid VoucherId { get; set; }
 
         #endregion

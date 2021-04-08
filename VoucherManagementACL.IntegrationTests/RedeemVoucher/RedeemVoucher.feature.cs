@@ -122,7 +122,7 @@ namespace VoucherManagementACL.IntegrationTests.RedeemVoucher
                         "Estate Managememt REST",
                         "Secret1",
                         "estateManagement",
-                        "MerchantId, EstateId, role"});
+                        "merchantId, estateId, role"});
             table14.AddRow(new string[] {
                         "voucherManagement",
                         "Voucher Management REST",
@@ -134,7 +134,7 @@ namespace VoucherManagementACL.IntegrationTests.RedeemVoucher
                         "Voucher Management ACL REST",
                         "Secret1",
                         "voucherManagementACL",
-                        "EstateId, role, ContractId"});
+                        "estateId, role, contractId"});
 #line 16
  testRunner.Given("the following api resources exist", ((string)(null)), table14, "Given ");
 #line hidden
