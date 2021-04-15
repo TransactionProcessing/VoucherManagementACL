@@ -5,6 +5,10 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>D:\Projects\StuartFerguson\VoucherManagementACL\VoucherManagementACL\VoucherManagementACL.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
 	<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.2" />
 	<PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="5.0.1" />
