@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>VoucherManagementACL.DataTransferObjects</name>
+    </assembly>
+    <members>
+        <member name="P:VoucherManagementACL.DataTransferObjects.Responses.GetVoucherResponseMessage.ResponseCode">
+            <summary>
+            Gets or sets the response code.
+            </summary>
+            <value>
+            The response code.
+            </value>
+        </member>
+        <member name="P:VoucherManagementACL.DataTransferObjects.Responses.GetVoucherResponseMessage.ResponseMessage">
+            <summary>
+            Gets or sets the response message.
+            </summary>
+            <value>
+            The response message.
+            </value>
+        </member>
+        <member name="P:VoucherManagementACL.DataTransferObjects.Responses.GetVoucherResponseMessage.ContractId">
+            <summary>
+            Gets or sets the contract identifier.
+            </summary>
+            <value>
+            The contract identifier.
+            </value>
+        </member>
+        <member name="P:VoucherManagementACL.DataTransferObjects.Responses.GetVoucherResponseMessage.EstateId">
+            <summary>
+            Gets or sets the estate identifier.
+            </summary>
+            <value>
+            The estate identifier.
+            </value>
+        </member>
+        <member name="P:VoucherManagementACL.DataTransferObjects.Responses.GetVoucherResponseMessage.ExpiryDate">
+            <summary>
+            Gets or sets the expiry date.
+            </summary>
+            <value>
+            The expiry date.
+            </value>
+        </member>
+        <member name="P:VoucherManagementACL.DataTransferObjects.Responses.GetVoucherResponseMessage.Value">
+            <summary>
+            Gets or sets the value.
+            </summary>
+            <value>
+            The value.
+            </value>
+        </member>
+        <member name="P:VoucherManagementACL.DataTransferObjects.Responses.GetVoucherResponseMessage.Balance">
+            <summary>
+            Gets or sets the balance.
+            </summary>
+            <value>
+            The balance.
+            </value>
+        </member>
+        <member name="P:VoucherManagementACL.DataTransferObjects.Responses.GetVoucherResponseMessage.VoucherCode">
+            <summary>
+            Gets or sets the voucher code.
+            </summary>
+            <value>
+            The voucher code.
+            </value>
+        </member>
+        <member name="P:VoucherManagementACL.DataTransferObjects.Responses.GetVoucherResponseMessage.VoucherId">
+            <summary>
+            Gets or sets the voucher identifier.
+            </summary>
+            <value>
+            The voucher identifier.
+            </value>
+        </member>
+        <member name="P:VoucherManagementACL.DataTransferObjects.Responses.RedeemVoucherResponseMessage.ResponseCode">
+            <summary>
+            Gets or sets the response code.
+            </summary>
+            <value>
+            The response code.
+            </value>
+        </member>
+        <member name="P:VoucherManagementACL.DataTransferObjects.Responses.RedeemVoucherResponseMessage.ResponseMessage">
+            <summary>
+            Gets or sets the response message.
+            </summary>
+            <value>
+            The response message.
+            </value>
+        </member>
+        <member name="P:VoucherManagementACL.DataTransferObjects.Responses.RedeemVoucherResponseMessage.ContractId">
+            <summary>
+            Gets or sets the contract identifier.
+            </summary>
+            <value>
+            The contract identifier.
+            </value>
+        </member>
+        <member name="P:VoucherManagementACL.DataTransferObjects.Responses.RedeemVoucherResponseMessage.EstateId">
+            <summary>
+            Gets or sets the estate identifier.
+            </summary>
+            <value>
+            The estate identifier.
+            </value>
+        </member>
+        <member name="P:VoucherManagementACL.DataTransferObjects.Responses.RedeemVoucherResponseMessage.ExpiryDate">
+            <summary>
+            Gets or sets the expiry date.
+            </summary>
+            <value>
+            The expiry date.
+            </value>
+        </member>
+        <member name="P:VoucherManagementACL.DataTransferObjects.Responses.RedeemVoucherResponseMessage.Balance">
+            <summary>
+            Gets or sets the value.
+            </summary>
+            <value>
+            The value.
+            </value>
+        </member>
+        <member name="P:VoucherManagementACL.DataTransferObjects.Responses.RedeemVoucherResponseMessage.VoucherCode">
+            <summary>
+            Gets or sets the voucher code.
+            </summary>
+            <value>
+            The voucher code.
+            </value>
+        </member>
+    </members>
+</doc>
