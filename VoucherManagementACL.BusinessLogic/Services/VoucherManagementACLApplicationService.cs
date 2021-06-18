@@ -6,6 +6,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Newtonsoft.Json;
+    using NLog;
     using SecurityService.Client;
     using SecurityService.DataTransferObjects.Responses;
     using Shared.General;
@@ -210,6 +211,8 @@
             String clientSecret = ConfigurationReader.GetValue("AppSettings", "ClientSecret");
 
             TokenResponse accessToken = await this.SecurityServiceClient.GetToken(clientId, clientSecret, cancellationToken);
+
+            Shared.Logger.Logger.LogInformation($"Access Token is [{accessToken.AccessToken}]");
 
             RedeemVoucherResponse response = null;
 
