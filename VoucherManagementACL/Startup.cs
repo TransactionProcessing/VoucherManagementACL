@@ -77,7 +77,18 @@ namespace VoucherManagementACL
                                                                      {
                                                                          return ConfigurationReader.GetBaseServerUri(serviceName).OriginalString;
                                                                      });
-            services.AddSingleton<HttpClient>();
+            HttpClientHandler httpClientHandler = new HttpClientHandler
+                                                  {
+                                                      ServerCertificateCustomValidationCallback = (message,
+                                                                                                   certificate2,
+                                                                                                   arg3,
+                                                                                                   arg4) =>
+                                                                                                  {
+                                                                                                      return true;
+                                                                                                  }
+                                                  };
+            HttpClient httpClient = new HttpClient(httpClientHandler);
+            services.AddSingleton<HttpClient>(httpClient);
         }
 
         private void ConfigureMiddlewareServices(IServiceCollection services)
@@ -132,17 +143,20 @@ namespace VoucherManagementACL
                                        })
                     .AddJwtBearer(options =>
                     {
-                       //options.SaveToken = true;
-                       options.Authority = ConfigurationReader.GetValue("SecurityConfiguration", "Authority");
+                        options.BackchannelHttpHandler = new HttpClientHandler
+                                                         {
+                                                             ServerCertificateCustomValidationCallback =
+                                                                 (message, certificate, chain, sslPolicyErrors) => true
+                                                         };
+                        options.Authority = ConfigurationReader.GetValue("SecurityConfiguration", "Authority");
                         options.Audience = ConfigurationReader.GetValue("SecurityConfiguration", "ApiName");
-                        options.RequireHttpsMetadata = false;
+
                         options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
-                        {
-                            ValidateIssuer = true,
-                            ValidateAudience = false,
-                            ValidAudience = ConfigurationReader.GetValue("SecurityConfiguration", "ApiName"),
-                            ValidIssuer = ConfigurationReader.GetValue("SecurityConfiguration", "Authority"),
-                        };
+                                                            {
+                                                                ValidateAudience = false,
+                                                                ValidAudience = ConfigurationReader.GetValue("SecurityConfiguration", "ApiName"),
+                                                                ValidIssuer = ConfigurationReader.GetValue("SecurityConfiguration", "Authority"),
+                                                            };
                         options.IncludeErrorDetails = true;
                     });
 
