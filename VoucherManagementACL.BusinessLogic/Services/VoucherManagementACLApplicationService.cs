@@ -212,8 +212,6 @@
 
             TokenResponse accessToken = await this.SecurityServiceClient.GetToken(clientId, clientSecret, cancellationToken);
 
-            Shared.Logger.Logger.LogInformation($"Access Token is [{accessToken.AccessToken}]");
-
             RedeemVoucherResponse response = null;
 
             try
