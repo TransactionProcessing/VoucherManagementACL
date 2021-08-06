@@ -42,8 +42,11 @@ namespace VoucherManagementACL
         public Startup(IWebHostEnvironment webHostEnvironment)
         {
             IConfigurationBuilder builder = new ConfigurationBuilder().SetBasePath(webHostEnvironment.ContentRootPath)
+                                                                      .AddJsonFile("/home/txnproc/config/appsettings.json", true, true)
+                                                                      .AddJsonFile($"/home/txnproc/config/appsettings.{webHostEnvironment.EnvironmentName}.json", optional: true)
                                                                       .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                                                                      .AddJsonFile($"appsettings.{webHostEnvironment.EnvironmentName}.json", optional: true).AddEnvironmentVariables();
+                                                                      .AddJsonFile($"appsettings.{webHostEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                                                                      .AddEnvironmentVariables();
 
             Startup.Configuration = builder.Build();
             Startup.WebHostEnvironment = webHostEnvironment;
@@ -190,6 +193,12 @@ namespace VoucherManagementACL
             ILogger logger = loggerFactory.CreateLogger("TransactionProcessor");
 
             Logger.Initialise(logger);
+
+            Action<String> loggerAction = message =>
+                                          {
+                                              Logger.LogInformation(message);
+                                          };
+            Startup.Configuration.LogConfiguration(loggerAction);
 
             app.AddRequestLogging();
             app.AddResponseLogging();
