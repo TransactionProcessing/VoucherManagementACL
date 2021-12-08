@@ -78,7 +78,9 @@ namespace VoucherManagement.IntegrationTests.Shared
                     EstateName = estateName
                 };
 
-                CreateEstateResponse response = await this.TestingContext.DockerHelper.EstateClient.CreateEstate(this.TestingContext.AccessToken, createEstateRequest, CancellationToken.None).ConfigureAwait(false);
+                CreateEstateResponse response = await this.TestingContext.DockerHelper.EstateClient
+                                                          .CreateEstate(this.TestingContext.AccessToken, createEstateRequest, CancellationToken.None)
+                                                          .ConfigureAwait(false);
 
                 response.ShouldNotBeNull();
                 response.EstateId.ShouldNotBe(Guid.Empty);
@@ -87,11 +89,14 @@ namespace VoucherManagement.IntegrationTests.Shared
                 this.TestingContext.AddEstateDetails(response.EstateId, estateName);
 
                 this.TestingContext.Logger.LogInformation($"Estate {estateName} created with Id {response.EstateId}");
-            }
 
-            foreach (TableRow tableRow in table.Rows)
-            {
                 EstateDetails estateDetails = this.TestingContext.GetEstateDetails(tableRow);
+
+                // Setup the subscriptions for the estate
+                await Retry.For(async () =>
+                {
+                    await this.TestingContext.DockerHelper.PopulateSubscriptionServiceConfiguration(estateName).ConfigureAwait(false);
+                }, retryFor: TimeSpan.FromMinutes(2), retryInterval: TimeSpan.FromSeconds(30));
 
                 EstateResponse estate = null;
                 await Retry.For(async () =>
@@ -99,7 +104,7 @@ namespace VoucherManagement.IntegrationTests.Shared
                     estate = await this.TestingContext.DockerHelper.EstateClient
                                        .GetEstate(this.TestingContext.AccessToken, estateDetails.EstateId, CancellationToken.None).ConfigureAwait(false);
                     estate.ShouldNotBeNull();
-                }).ConfigureAwait(false);
+                }, TimeSpan.FromMinutes(2)).ConfigureAwait(false);
 
                 estate.EstateName.ShouldBe(estateDetails.EstateName);
             }
