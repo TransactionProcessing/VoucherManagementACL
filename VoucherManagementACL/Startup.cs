@@ -5,12 +5,14 @@ namespace VoucherManagementACL
     using System.IO;
     using System.Net.Http;
     using System.Reflection;
+    using Bootstrapper;
     using BusinessLogic.RequestHandlers;
     using BusinessLogic.Requests;
     using BusinessLogic.Services;
     using Common;
     using Factories;
     using HealthChecks.UI.Client;
+    using Lamar;
     using MediatR;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
@@ -56,129 +58,23 @@ namespace VoucherManagementACL
 
         public static IWebHostEnvironment WebHostEnvironment { get; set; }
 
+        public static Container Container;
+
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureContainer(ServiceRegistry services)
         {
             ConfigurationReader.Initialise(Startup.Configuration);
+            
+            services.IncludeRegistry<MiddlewareRegistry>();
+            services.IncludeRegistry<MediatorRegistry>();
+            services.IncludeRegistry<ApplicationServiceRegistry>();
+            services.IncludeRegistry<ClientRegistry>();
+            services.IncludeRegistry<MiscRegistry>();
 
-            this.ConfigureMiddlewareServices(services);
-
-            services.AddTransient<IMediator, Mediator>();
-
-            services.AddTransient<ServiceFactory>(context =>
-                                                  {
-                                                      return t => context.GetService(t);
-                                                  });
-            services.AddSingleton<IModelFactory, ModelFactory>();
-            services.AddSingleton<IRequestHandler<VersionCheckRequest,Unit>, VersionCheckRequestHandler>();
-            services.AddSingleton<IRequestHandler<GetVoucherRequest, GetVoucherResponse>, VoucherRequestHandler>();
-            services.AddSingleton<IRequestHandler<RedeemVoucherRequest, RedeemVoucherResponse>, VoucherRequestHandler>();
-            services.AddSingleton<IVoucherManagementACLApplicationService, VoucherManagementACLApplicationService>();
-            services.AddSingleton<ISecurityServiceClient, SecurityServiceClient>();
-            services.AddSingleton<IVoucherManagementClient, VoucherManagementClient>();
-            services.AddSingleton<Func<String, String>>(container => (serviceName) =>
-                                                                     {
-                                                                         return ConfigurationReader.GetBaseServerUri(serviceName).OriginalString;
-                                                                     });
-            HttpClientHandler httpClientHandler = new HttpClientHandler
-                                                  {
-                                                      ServerCertificateCustomValidationCallback = (message,
-                                                                                                   certificate2,
-                                                                                                   arg3,
-                                                                                                   arg4) =>
-                                                                                                  {
-                                                                                                      return true;
-                                                                                                  }
-                                                  };
-            HttpClient httpClient = new HttpClient(httpClientHandler);
-            services.AddSingleton<HttpClient>(httpClient);
+            Startup.Container = new Container(services);
         }
 
-        private HttpClientHandler ApiEndpointHttpHandler(IServiceProvider serviceProvider)
-        {
-            return new HttpClientHandler
-                   {
-                       ServerCertificateCustomValidationCallback = (message,
-                                                                    cert,
-                                                                    chain,
-                                                                    errors) =>
-                                                                   {
-                                                                       return true;
-                                                                   }
-                   };
-        }
-
-        private void ConfigureMiddlewareServices(IServiceCollection services)
-        {
-            services.AddHealthChecks().AddSecurityService(ApiEndpointHttpHandler).AddVoucherManagementService();
-
-            services.AddSwaggerGen(c =>
-                                   {
-                                       c.SwaggerDoc("v1", new OpenApiInfo
-                                                          {
-                                                              Title = "Voucher Management ACL",
-                                                              Version = "1.0",
-                                                              Description = "A REST Api to provide and Anti Corruption Layer for the Voucher Mobile Application",
-                                                              Contact = new OpenApiContact
-                                                                        {
-                                                                            Name = "Stuart Ferguson",
-                                                                            Email = "golfhandicapping@btinternet.com"
-                                                                        }
-                                                          });
-                                       // add a custom operation filter which sets default values
-                                       c.OperationFilter<SwaggerDefaultValues>();
-                                       c.ExampleFilters();
-
-                                       //Locate the XML files being generated by ASP.NET...
-                                       var directory = new DirectoryInfo(AppContext.BaseDirectory);
-                                       var xmlFiles = directory.GetFiles("*.xml");
-
-                                       //... and tell Swagger to use those XML comments.
-                                       foreach (FileInfo fileInfo in xmlFiles)
-                                       {
-                                           c.IncludeXmlComments(fileInfo.FullName);
-                                       }
-                                   });
-
-            services.AddSwaggerExamplesFromAssemblyOf<SwaggerJsonConverter>();
-
-            services.AddAuthentication(options =>
-                                       {
-                                           options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                                           options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                                           options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                                       })
-                    .AddJwtBearer(options =>
-                    {
-                        options.BackchannelHttpHandler = new HttpClientHandler
-                                                         {
-                                                             ServerCertificateCustomValidationCallback =
-                                                                 (message, certificate, chain, sslPolicyErrors) => true
-                                                         };
-                        options.Authority = ConfigurationReader.GetValue("SecurityConfiguration", "Authority");
-                        options.Audience = ConfigurationReader.GetValue("SecurityConfiguration", "ApiName");
-
-                        options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
-                                                            {
-                                                                ValidateAudience = false,
-                                                                ValidAudience = ConfigurationReader.GetValue("SecurityConfiguration", "ApiName"),
-                                                                ValidIssuer = ConfigurationReader.GetValue("SecurityConfiguration", "Authority"),
-                                                            };
-                        options.IncludeErrorDetails = true;
-                    });
-
-            services.AddControllers().AddNewtonsoftJson(options =>
-                                                        {
-                                                            options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                                                            options.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
-                                                            options.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
-                                                            options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
-                                                            options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                                                        });
-
-            Assembly assembly = this.GetType().GetTypeInfo().Assembly;
-            services.AddMvcCore().AddApplicationPart(assembly).AddControllersAsServices();
-        }
+        
         
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
