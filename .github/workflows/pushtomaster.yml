@@ -44,4 +44,9 @@ jobs:
         dotnet pack "VoucherManagementACL.DataTransferObjects\VoucherManagementACL.DataTransferObjects.csproj" /p:PackageVersion=${{ steps.next_version.outputs.VERSION }} --output Nugets
         dotnet nuget push Nugets/VoucherManagementACL.DataTransferObjects.${{ steps.next_version.outputs.VERSION }}.nupkg --api-key ${{ secrets.MYGET_APIKEY }} --source https://www.myget.org/F/transactionprocessing/api/v2/package
 
+    - name: Publish Images to Docker Hub
+      run: |
+        docker build . --file VoucherManagementACL/Dockerfile --tag stuartferguson/vouchermanagementacl:master
+        docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_PASSWORD }}
+        docker push stuartferguson/vouchermanagementacl:master
 
