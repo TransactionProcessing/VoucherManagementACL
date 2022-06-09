@@ -1,9 +1,12 @@
-//var fromStreams = fromStreams || require('../../node_modules/esprojection-testing-framework').scope.fromStreams;
-//var emit = emit || require('../../node_modules/esprojection-testing-framework').scope.emit;
+//starttestsetup
+var fromStreams = fromStreams || require('../../node_modules/@transactionprocessing/esprojection-testing-framework').scope.fromStreams;
+var emit = emit || require('../../node_modules/@transactionprocessing/esprojection-testing-framework').scope.emit;
+//endtestsetup
 
 fromStreams("$ce-EstateAggregate", "$et-CallbackReceivedEvent")
     .when({
-        $init: function (s, e) {
+        $init: function (s, e)
+        {
             return {
                 estates: [],
                 debug: []
