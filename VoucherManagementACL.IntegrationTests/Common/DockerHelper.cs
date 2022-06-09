@@ -269,13 +269,13 @@ namespace VoucherManagement.IntegrationTests.Common
 
             await this.LoadEventStoreProjections().ConfigureAwait(false);
         }
+
         public async Task PopulateSubscriptionServiceConfiguration(String estateName)
         {
-            EventStorePersistentSubscriptionsClient client = new EventStorePersistentSubscriptionsClient(ConfigureEventStoreSettings(this.EventStoreHttpPort));
-
-            PersistentSubscriptionSettings settings = new PersistentSubscriptionSettings(resolveLinkTos: true, StreamPosition.Start);
-            await client.CreateAsync(estateName.Replace(" ", ""), "Reporting", settings);
-            await client.CreateAsync($"EstateManagementSubscriptionStream_{estateName.Replace(" ", "")}", "Estate Management", settings);
+            List<(String streamName, String groupName, Int32 maxRetries)> subscriptions = new List<(String streamName, String groupName, Int32 maxRetries)>();
+            subscriptions.Add((estateName.Replace(" ", ""), "Reporting", 0));
+            subscriptions.Add(($"EstateManagementSubscriptionStream_{estateName.Replace(" ", "")}", "Estate Management", 0));
+            await this.PopulateSubscriptionServiceConfiguration(this.EventStoreHttpPort, subscriptions);
         }
 
         private static EventStoreClientSettings ConfigureEventStoreSettings(Int32 eventStoreHttpPort)
