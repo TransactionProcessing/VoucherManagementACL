@@ -1,29 +1,29 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	  <TargetFramework>net5.0</TargetFramework>
+	  <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EstateManagement.Client" Version="1.0.16.2" />
-    <PackageReference Include="SecurityService.Client" Version="1.0.8" />
-    <PackageReference Include="Shared" Version="1.1.5" />
-    <PackageReference Include="Shared.IntegrationTesting" Version="1.1.5" />
+    <PackageReference Include="EstateManagement.Client" Version="1.1.2-build8" />
+    <PackageReference Include="SecurityService.Client" Version="1.1.1-build9" />
+    <PackageReference Include="Shared" Version="1.3.3" />
+    <PackageReference Include="Shared.IntegrationTesting" Version="1.3.3" />
     <PackageReference Include="Shouldly" Version="4.0.3" />
-    <PackageReference Include="SpecFlow" Version="3.5.14" />
-    <PackageReference Include="SpecFlow.Tools.MsBuild.Generation" Version="3.5.14" />
-    <PackageReference Include="SpecFlow.xUnit" Version="3.5.14" />
-	  <PackageReference Include="EventStore.Client.Grpc.PersistentSubscriptions" Version="21.2.0" />
-    <PackageReference Include="EventStore.Client.Grpc.ProjectionManagement" Version="21.2.0" />
-    <PackageReference Include="Grpc.Net.Client" Version="2.35.0" />
-    <PackageReference Include="EstateReporting.Database" Version="1.0.18.2" />
-    <PackageReference Include="VoucherManagement.Client" Version="1.0.7.1" />
+    <PackageReference Include="SpecFlow" Version="3.9.74" />
+    <PackageReference Include="SpecFlow.Tools.MsBuild.Generation" Version="3.9.74" />
+    <PackageReference Include="SpecFlow.xUnit" Version="3.9.74" />
+	  <PackageReference Include="EventStore.Client.Grpc.PersistentSubscriptions" Version="22.0.0" />
+    <PackageReference Include="EventStore.Client.Grpc.ProjectionManagement" Version="22.0.0" />
+    <PackageReference Include="EstateReporting.Database" Version="1.1.3-build8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.5" />
+    <PackageReference Include="VoucherManagement.Client" Version="1.1.1-build2" />
     <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +34,33 @@
     <Compile Update="RedeemVoucher\RedeemVoucher.feature.cs">
       <DesignTime>True</DesignTime>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="projections\continuous\CallbackHandlerEnricher.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="projections\continuous\EstateAggregator.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="projections\continuous\EstateManagementSubscriptionStreamBuilder.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="projections\continuous\FileProcessorSubscriptionStreamBuilder.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="projections\continuous\MerchantAggregator.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="projections\continuous\MerchantBalanceCalculator.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="projections\continuous\TransactionEnricher.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="projections\continuous\TransactionProcessorSubscriptionStreamBuilder.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

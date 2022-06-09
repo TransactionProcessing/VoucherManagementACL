@@ -98,43 +98,6 @@ namespace VoucherManagement.IntegrationTests.Common
         }
 
         #endregion
-        
-        private async Task LoadEventStoreProjections()
-        {
-            //Start our Continous Projections - we might decide to do this at a different stage, but now lets try here
-            String projectionsFolder = "../../../projections/continuous";
-            IPAddress[] ipAddresses = Dns.GetHostAddresses("127.0.0.1");
-
-            if (!String.IsNullOrWhiteSpace(projectionsFolder))
-            {
-                DirectoryInfo di = new DirectoryInfo(projectionsFolder);
-
-                if (di.Exists)
-                {
-                    FileInfo[] files = di.GetFiles();
-
-                    EventStoreProjectionManagementClient projectionClient = new EventStoreProjectionManagementClient(ConfigureEventStoreSettings(this.EventStoreHttpPort));
-
-                    foreach (FileInfo file in files)
-                    {
-                        String projection = File.ReadAllText(file.FullName);
-                        String projectionName = file.Name.Replace(".js", String.Empty);
-
-                        try
-                        {
-                            Logger.LogInformation($"Creating projection [{projectionName}]");
-                            await projectionClient.CreateContinuousAsync(projectionName, projection, trackEmittedStreams: true).ConfigureAwait(false);
-                        }
-                        catch (Exception e)
-                        {
-                            Logger.LogError(new Exception($"Projection [{projectionName}] error", e));
-                        }
-                    }
-                }
-            }
-
-            Logger.LogInformation("Loaded projections");
-        }
 
         #region Methods
 
@@ -168,7 +131,7 @@ namespace VoucherManagement.IntegrationTests.Common
             INetworkService testNetwork = DockerHelper.SetupTestNetwork();
             this.TestNetworks.Add(testNetwork);
             IContainerService eventStoreContainer =
-                this.SetupEventStoreContainer("eventstore/eventstore:21.2.0-buster-slim", testNetwork);
+                this.SetupEventStoreContainer("eventstore/eventstore:21.10.0-buster-slim", testNetwork);
             this.EventStoreHttpPort = eventStoreContainer.ToHostExposedEndpoint($"{DockerHelper.EventStoreHttpDockerPort}/tcp").Port;
 
             String insecureEventStoreEnvironmentVariable = "EventStoreSettings:Insecure=true";
@@ -267,42 +230,42 @@ namespace VoucherManagement.IntegrationTests.Common
             this.HttpClient = new HttpClient();
             this.HttpClient.BaseAddress = new Uri(VoucherManagementAclBaseAddressResolver(string.Empty));
 
-            await this.LoadEventStoreProjections().ConfigureAwait(false);
+            await this.LoadEventStoreProjections(this.EventStoreHttpPort).ConfigureAwait(false);
         }
+
         public async Task PopulateSubscriptionServiceConfiguration(String estateName)
         {
-            EventStorePersistentSubscriptionsClient client = new EventStorePersistentSubscriptionsClient(ConfigureEventStoreSettings(this.EventStoreHttpPort));
-
-            PersistentSubscriptionSettings settings = new PersistentSubscriptionSettings(resolveLinkTos: true, StreamPosition.Start);
-            await client.CreateAsync(estateName.Replace(" ", ""), "Reporting", settings);
-            await client.CreateAsync($"EstateManagementSubscriptionStream_{estateName.Replace(" ", "")}", "Estate Management", settings);
+            List<(String streamName, String groupName, Int32 maxRetries)> subscriptions = new List<(String streamName, String groupName, Int32 maxRetries)>();
+            subscriptions.Add((estateName.Replace(" ", ""), "Reporting", 5));
+            subscriptions.Add(($"EstateManagementSubscriptionStream_{estateName.Replace(" ", "")}", "Estate Management", 0));
+            await this.PopulateSubscriptionServiceConfiguration(this.EventStoreHttpPort, subscriptions);
         }
 
-        private static EventStoreClientSettings ConfigureEventStoreSettings(Int32 eventStoreHttpPort)
-        {
-            String connectionString = $"http://127.0.0.1:{eventStoreHttpPort}";
+        //private static EventStoreClientSettings ConfigureEventStoreSettings(Int32 eventStoreHttpPort)
+        //{
+        //    String connectionString = $"http://127.0.0.1:{eventStoreHttpPort}";
 
-            EventStoreClientSettings settings = new EventStoreClientSettings();
-            settings.CreateHttpMessageHandler = () => new SocketsHttpHandler
-                                                      {
-                                                          SslOptions =
-                                                          {
-                                                              RemoteCertificateValidationCallback = (sender,
-                                                                                                     certificate,
-                                                                                                     chain,
-                                                                                                     errors) => true,
-                                                          }
-                                                      };
-            settings.ConnectionName = "Specflow";
-            settings.ConnectivitySettings = new EventStoreClientConnectivitySettings
-                                            {
-                                                Insecure = true,
-                                                Address = new Uri(connectionString),
-                                            };
+        //    EventStoreClientSettings settings = new EventStoreClientSettings();
+        //    settings.CreateHttpMessageHandler = () => new SocketsHttpHandler
+        //                                              {
+        //                                                  SslOptions =
+        //                                                  {
+        //                                                      RemoteCertificateValidationCallback = (sender,
+        //                                                                                             certificate,
+        //                                                                                             chain,
+        //                                                                                             errors) => true,
+        //                                                  }
+        //                                              };
+        //    settings.ConnectionName = "Specflow";
+        //    settings.ConnectivitySettings = new EventStoreClientConnectivitySettings
+        //                                    {
+        //                                        Insecure = true,
+        //                                        Address = new Uri(connectionString),
+        //                                    };
 
-            settings.DefaultCredentials = new UserCredentials("admin", "changeit");
-            return settings;
-        }
+        //    settings.DefaultCredentials = new UserCredentials("admin", "changeit");
+        //    return settings;
+        //}
 
         private async Task RemoveEstateReadModel()
         {
