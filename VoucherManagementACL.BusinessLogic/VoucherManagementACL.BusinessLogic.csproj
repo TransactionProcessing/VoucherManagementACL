@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	  <TargetFramework>net5.0</TargetFramework>
+	  <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="9.0.0" />
-    <PackageReference Include="SecurityService.Client" Version="1.0.8" />
-    <PackageReference Include="Shared" Version="1.1.5" />
-    <PackageReference Include="VoucherManagement.Client" Version="1.0.7.1" />
+    <PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="SecurityService.Client" Version="1.1.1-build9" />
+    <PackageReference Include="Shared" Version="1.3.3" />
+    <PackageReference Include="VoucherManagement.Client" Version="1.1.1-build2" />
   </ItemGroup>
 
   <ItemGroup>
