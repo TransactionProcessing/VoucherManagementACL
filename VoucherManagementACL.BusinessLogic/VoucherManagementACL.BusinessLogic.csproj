@@ -6,9 +6,9 @@
 
   <ItemGroup>
     <PackageReference Include="MediatR" Version="10.0.1" />
-    <PackageReference Include="SecurityService.Client" Version="1.1.1-build9" />
-    <PackageReference Include="Shared" Version="1.3.3" />
-    <PackageReference Include="VoucherManagement.Client" Version="1.1.1-build2" />
+    <PackageReference Include="SecurityService.Client" Version="1.1.1" />
+    <PackageReference Include="Shared" Version="1.3.7" />
+    <PackageReference Include="VoucherManagement.Client" Version="1.1.1" />
   </ItemGroup>
 
   <ItemGroup>
