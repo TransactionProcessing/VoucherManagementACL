@@ -101,12 +101,44 @@ namespace VoucherManagement.IntegrationTests.Common
 
         #region Methods
 
+        protected override String GenerateEventStoreConnectionString()
+        {
+            // TODO: this could move to shared
+            String eventStoreAddress = $"esdb://admin:changeit@{this.EventStoreContainerName}:{DockerHelper.EventStoreHttpDockerPort}";
+            if (this.IsSecureEventStore)
+            {
+                eventStoreAddress = $"{eventStoreAddress}?tls=true&tlsVerifyCert=false";
+            }
+            else
+            {
+                eventStoreAddress = $"{eventStoreAddress}?tls=false&tlsVerifyCert=false";
+            }
+
+            return eventStoreAddress;
+        }
+
+        public Boolean IsSecureEventStore { get; private set; }
+
         /// <summary>
         /// Starts the containers for scenario run.
         /// </summary>
         /// <param name="scenarioName">Name of the scenario.</param>
         public override async Task StartContainersForScenarioRun(String scenarioName)
         {
+            String IsSecureEventStoreEnvVar = Environment.GetEnvironmentVariable("IsSecureEventStore");
+
+            if (IsSecureEventStoreEnvVar == null)
+            {
+                // No env var set so default to insecure
+                this.IsSecureEventStore = false;
+            }
+            else
+            {
+                // We have the env var so we set the secure flag based on the value in the env var
+                Boolean.TryParse(IsSecureEventStoreEnvVar, out Boolean isSecure);
+                this.IsSecureEventStore = isSecure;
+            }
+
             this.HostTraceFolder = FdOs.IsWindows() ? $"D:\\home\\txnproc\\trace\\{scenarioName}" : $"//home//txnproc//trace//{scenarioName}";
 
             Logging.Enabled();
@@ -131,10 +163,15 @@ namespace VoucherManagement.IntegrationTests.Common
             INetworkService testNetwork = DockerHelper.SetupTestNetwork();
             this.TestNetworks.Add(testNetwork);
             IContainerService eventStoreContainer =
-                this.SetupEventStoreContainer("eventstore/eventstore:21.10.0-buster-slim", testNetwork);
+                this.SetupEventStoreContainer("eventstore/eventstore:21.10.0-buster-slim", testNetwork, isSecure: this.IsSecureEventStore);
             this.EventStoreHttpPort = eventStoreContainer.ToHostExposedEndpoint($"{DockerHelper.EventStoreHttpDockerPort}/tcp").Port;
 
-            String insecureEventStoreEnvironmentVariable = "EventStoreSettings:Insecure=true";
+            String insecureEventStoreEnvironmentVariable = "EventStoreSettings:Insecure=True";
+            if (this.IsSecureEventStore)
+            {
+                insecureEventStoreEnvironmentVariable = "EventStoreSettings:Insecure=False";
+            }
+
             String persistentSubscriptionPollingInSeconds = "AppSettings:PersistentSubscriptionPollingInSeconds=10";
             String internalSubscriptionServiceCacheDuration = "AppSettings:InternalSubscriptionServiceCacheDuration=0";
 
@@ -233,40 +270,13 @@ namespace VoucherManagement.IntegrationTests.Common
             await this.LoadEventStoreProjections(this.EventStoreHttpPort).ConfigureAwait(false);
         }
 
-        public async Task PopulateSubscriptionServiceConfiguration(String estateName)
+        public async Task PopulateSubscriptionServiceConfiguration(String estateName, Boolean isSecureEventStore)
         {
             List<(String streamName, String groupName, Int32 maxRetries)> subscriptions = new List<(String streamName, String groupName, Int32 maxRetries)>();
             subscriptions.Add((estateName.Replace(" ", ""), "Reporting", 5));
             subscriptions.Add(($"EstateManagementSubscriptionStream_{estateName.Replace(" ", "")}", "Estate Management", 0));
-            await this.PopulateSubscriptionServiceConfiguration(this.EventStoreHttpPort, subscriptions);
+            await this.PopulateSubscriptionServiceConfiguration(this.EventStoreHttpPort, subscriptions, isSecureEventStore);
         }
-
-        //private static EventStoreClientSettings ConfigureEventStoreSettings(Int32 eventStoreHttpPort)
-        //{
-        //    String connectionString = $"http://127.0.0.1:{eventStoreHttpPort}";
-
-        //    EventStoreClientSettings settings = new EventStoreClientSettings();
-        //    settings.CreateHttpMessageHandler = () => new SocketsHttpHandler
-        //                                              {
-        //                                                  SslOptions =
-        //                                                  {
-        //                                                      RemoteCertificateValidationCallback = (sender,
-        //                                                                                             certificate,
-        //                                                                                             chain,
-        //                                                                                             errors) => true,
-        //                                                  }
-        //                                              };
-        //    settings.ConnectionName = "Specflow";
-        //    settings.ConnectivitySettings = new EventStoreClientConnectivitySettings
-        //                                    {
-        //                                        Insecure = true,
-        //                                        Address = new Uri(connectionString),
-        //                                    };
-
-        //    settings.DefaultCredentials = new UserCredentials("admin", "changeit");
-        //    return settings;
-        //}
-
         private async Task RemoveEstateReadModel()
         {
             List<Guid> estateIdList = this.TestingContext.GetAllEstateIds();
