@@ -10,8 +10,8 @@
     using SecurityService.Client;
     using SecurityService.DataTransferObjects.Responses;
     using Shared.General;
-    using VoucherManagement.Client;
-    using VoucherManagement.DataTransferObjects;
+    using TransactionProcessor.Client;
+    using TransactionProcessor.DataTransferObjects;
     using GetVoucherResponse = Models.GetVoucherResponse;
     using RedeemVoucherResponse = Models.RedeemVoucherResponse;
 
@@ -28,17 +28,17 @@
         /// </summary>
         private readonly ISecurityServiceClient SecurityServiceClient;
 
-        private readonly IVoucherManagementClient VoucherManagementClient;
+        private readonly ITransactionProcessorClient TransactionProcessorClient;
 
         #endregion
 
         #region Constructors
 
         public VoucherManagementACLApplicationService(ISecurityServiceClient securityServiceClient,
-                                                      IVoucherManagementClient voucherManagementClient)
+                                                      ITransactionProcessorClient transactionProcessorClient)
         {
             this.SecurityServiceClient = securityServiceClient;
-            this.VoucherManagementClient = voucherManagementClient;
+            this.TransactionProcessorClient = transactionProcessorClient;
         }
 
         #endregion
@@ -154,7 +154,7 @@
 
             try
             {
-                VoucherManagement.DataTransferObjects.GetVoucherResponse getVoucherResponse = await this.VoucherManagementClient.GetVoucher(accessToken.AccessToken, estateId, voucherCode, cancellationToken);
+                TransactionProcessor.DataTransferObjects.GetVoucherResponse getVoucherResponse = await this.TransactionProcessorClient.GetVoucherByCode(accessToken.AccessToken, estateId, voucherCode, cancellationToken);
 
                 response = new GetVoucherResponse
                          {
@@ -222,7 +222,7 @@
                                                                 VoucherCode = voucherCode
                                                             };
 
-                VoucherManagement.DataTransferObjects.RedeemVoucherResponse redeemVoucherResponse = await this.VoucherManagementClient.RedeemVoucher(accessToken.AccessToken, redeemVoucherRequest, cancellationToken);
+                TransactionProcessor.DataTransferObjects.RedeemVoucherResponse redeemVoucherResponse = await this.TransactionProcessorClient.RedeemVoucher(accessToken.AccessToken, redeemVoucherRequest, cancellationToken);
 
                 response = new RedeemVoucherResponse
                 {

@@ -22,8 +22,8 @@ namespace VoucherManagement.IntegrationTests.Common
     using global::Shared.Logger;
     using Microsoft.Data.SqlClient;
     using SecurityService.Client;
-    using VoucherManagement.Client;
-
+    using TransactionProcessor.Client;
+    
     public class DockerHelper : global::Shared.IntegrationTesting.DockerHelper
     {
         #region Fields
@@ -38,7 +38,7 @@ namespace VoucherManagement.IntegrationTests.Common
         /// </summary>
         public ISecurityServiceClient SecurityServiceClient;
 
-        public IVoucherManagementClient VoucherManagementClient;
+        public ITransactionProcessorClient TransactionProcessorClient;
         
         private readonly TestingContext TestingContext;
         
@@ -73,10 +73,14 @@ namespace VoucherManagement.IntegrationTests.Common
         {
             await base.StartContainersForScenarioRun(scenarioName);
 
+            await this.SetupVoucherManagementAclContainer(new List<INetworkService> {
+                                                                                        this.TestNetworks.Last(),
+                                                                                    });
+
             // Setup the base address resolvers
             String EstateManagementBaseAddressResolver(String api) => $"http://127.0.0.1:{this.EstateManagementPort}";
             String SecurityServiceBaseAddressResolver(String api) => $"https://127.0.0.1:{this.SecurityServicePort}";
-            String VoucherManagementBaseAddressResolver(String api) => $"http://127.0.0.1:{this.VoucherManagementPort}";
+            String TransactionProcessorBaseAddressResolver(String api) => $"http://127.0.0.1:{this.TransactionProcessorPort}";
             String VoucherManagementAclBaseAddressResolver(String api) => $"http://127.0.0.1:{this.VoucherManagementAclPort}";
 
             HttpClientHandler clientHandler = new HttpClientHandler
@@ -93,10 +97,24 @@ namespace VoucherManagement.IntegrationTests.Common
             HttpClient httpClient = new HttpClient(clientHandler);
             this.EstateClient = new EstateClient(EstateManagementBaseAddressResolver, httpClient);
             this.SecurityServiceClient = new SecurityServiceClient(SecurityServiceBaseAddressResolver, httpClient);
-            this.VoucherManagementClient = new VoucherManagementClient(VoucherManagementBaseAddressResolver, httpClient);
+            this.TransactionProcessorClient = new TransactionProcessorClient(TransactionProcessorBaseAddressResolver, httpClient);
 
             this.HttpClient = new HttpClient();
             this.HttpClient.BaseAddress = new Uri(VoucherManagementAclBaseAddressResolver(string.Empty));
+        }
+
+        public override async Task CreateEstateSubscriptions(String estateName)
+        {
+            List<(String streamName, String groupName, Int32 maxRetries)> subscriptions = new List<(String streamName, String groupName, Int32 maxRetries)>
+                                                                                          {
+                                                                                              (estateName.Replace(" ", ""), "Estate Management", 2),
+                                                                                              ($"TransactionProcessorSubscriptionStream_{estateName.Replace(" ", "")}", "Transaction Processor", 0),
+                                                                                              ($"FileProcessorSubscriptionStream_{estateName.Replace(" ", "")}", "File Processor", 0)
+                                                                                          };
+            foreach ((String streamName, String groupName, Int32 maxRetries) subscription in subscriptions)
+            {
+                await this.CreatePersistentSubscription(subscription);
+            }
         }
 
         private async Task RemoveEstateReadModel()

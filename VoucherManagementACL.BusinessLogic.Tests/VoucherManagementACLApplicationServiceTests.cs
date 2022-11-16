@@ -11,8 +11,8 @@
     using Shared.General;
     using Shouldly;
     using Testing;
-    using VoucherManagement.Client;
-    using VoucherManagement.DataTransferObjects;
+    using TransactionProcessor.Client;
+    using TransactionProcessor.DataTransferObjects;
     using Xunit;
     using GetVoucherResponse = Models.GetVoucherResponse;
     using RedeemVoucherResponse = Models.RedeemVoucherResponse;
@@ -36,8 +36,8 @@
         [Fact]
         public async Task VoucherManagementACLApplicationService_GetVoucher_VoucherRetrieved()
         {
-            Mock<IVoucherManagementClient> voucherManagementClient = new Mock<IVoucherManagementClient>();
-            voucherManagementClient.Setup(v => v.GetVoucher(It.IsAny<String>(), It.IsAny<Guid>(), It.IsAny<String>(), It.IsAny<CancellationToken>()))
+            Mock<ITransactionProcessorClient> voucherManagementClient = new Mock<ITransactionProcessorClient>();
+            voucherManagementClient.Setup(v => v.GetVoucherByCode(It.IsAny<String>(), It.IsAny<Guid>(), It.IsAny<String>(), It.IsAny<CancellationToken>()))
                                    .ReturnsAsync(TestData.GetVoucherResponse);
             Mock<ISecurityServiceClient> securityServiceClient = new Mock<ISecurityServiceClient>();
             securityServiceClient.Setup(s => s.GetToken(It.IsAny<String>(), It.IsAny<String>(), It.IsAny<CancellationToken>())).ReturnsAsync(TestData.TokenResponse);
@@ -59,8 +59,8 @@
         [Fact]
         public async Task VoucherManagementACLApplicationService_GetVoucher_InvalidOperationExceptionErrorInGetVoucher_GetVoucherIsNotSuccessful()
         {
-            Mock<IVoucherManagementClient> voucherManagementClient = new Mock<IVoucherManagementClient>();
-            voucherManagementClient.Setup(v => v.GetVoucher(It.IsAny<String>(), It.IsAny<Guid>(), It.IsAny<String>(), It.IsAny<CancellationToken>()))
+            Mock<ITransactionProcessorClient> voucherManagementClient = new Mock<ITransactionProcessorClient>();
+            voucherManagementClient.Setup(v => v.GetVoucherByCode(It.IsAny<String>(), It.IsAny<Guid>(), It.IsAny<String>(), It.IsAny<CancellationToken>()))
                                    .ThrowsAsync(new Exception("Error", new InvalidOperationException(TestData.InvalidOperationErrorResponseMessage)));
             Mock<ISecurityServiceClient> securityServiceClient = new Mock<ISecurityServiceClient>();
             securityServiceClient.Setup(s => s.GetToken(It.IsAny<String>(), It.IsAny<String>(), It.IsAny<CancellationToken>())).ReturnsAsync(TestData.TokenResponse);
@@ -78,8 +78,8 @@
         [Fact]
         public async Task VoucherManagementACLApplicationService_GetVoucher_HttpRequestExceptionErrorInGetVoucher_GetVoucherNotSuccessful()
         {
-            Mock<IVoucherManagementClient> voucherManagementClient = new Mock<IVoucherManagementClient>();
-            voucherManagementClient.Setup(v => v.GetVoucher(It.IsAny<String>(), It.IsAny<Guid>(), It.IsAny<String>(), It.IsAny<CancellationToken>()))
+            Mock<ITransactionProcessorClient> voucherManagementClient = new Mock<ITransactionProcessorClient>();
+            voucherManagementClient.Setup(v => v.GetVoucherByCode(It.IsAny<String>(), It.IsAny<Guid>(), It.IsAny<String>(), It.IsAny<CancellationToken>()))
                                    .ThrowsAsync(new Exception("Error", new HttpRequestException(TestData.HttpRequestErrorResponseMessage)));
             Mock<ISecurityServiceClient> securityServiceClient = new Mock<ISecurityServiceClient>();
             securityServiceClient.Setup(s => s.GetToken(It.IsAny<String>(), It.IsAny<String>(), It.IsAny<CancellationToken>())).ReturnsAsync(TestData.TokenResponse);
@@ -97,8 +97,8 @@
         [Fact]
         public async Task VoucherManagementACLApplicationService_GetVoucher_OtherExceptionErrorInInGetVoucher_GetVoucherNotSuccessful()
         {
-            Mock<IVoucherManagementClient> voucherManagementClient = new Mock<IVoucherManagementClient>();
-            voucherManagementClient.Setup(v => v.GetVoucher(It.IsAny<String>(), It.IsAny<Guid>(), It.IsAny<String>(), It.IsAny<CancellationToken>()))
+            Mock<ITransactionProcessorClient> voucherManagementClient = new Mock<ITransactionProcessorClient>();
+            voucherManagementClient.Setup(v => v.GetVoucherByCode(It.IsAny<String>(), It.IsAny<Guid>(), It.IsAny<String>(), It.IsAny<CancellationToken>()))
                                    .ThrowsAsync(new Exception("Error", new Exception(TestData.GeneralErrorResponseMessage)));
             Mock<ISecurityServiceClient> securityServiceClient = new Mock<ISecurityServiceClient>();
             securityServiceClient.Setup(s => s.GetToken(It.IsAny<String>(), It.IsAny<String>(), It.IsAny<CancellationToken>())).ReturnsAsync(TestData.TokenResponse);
@@ -116,7 +116,7 @@
         [Fact]
         public async Task VoucherManagementACLApplicationService_RedeemVoucher_VoucherRedeemed()
         {
-            Mock<IVoucherManagementClient> voucherManagementClient = new Mock<IVoucherManagementClient>();
+            Mock<ITransactionProcessorClient> voucherManagementClient = new Mock<ITransactionProcessorClient>();
             voucherManagementClient.Setup(v => v.RedeemVoucher(It.IsAny<String>(), It.IsAny<RedeemVoucherRequest>(), It.IsAny<CancellationToken>()))
                                    .ReturnsAsync(TestData.RedeemVoucherResponse);
             Mock<ISecurityServiceClient> securityServiceClient = new Mock<ISecurityServiceClient>();
@@ -138,7 +138,7 @@
         [Fact]
         public async Task VoucherManagementACLApplicationService_RedeemVoucher_InvalidOperationExceptionErrorInGetVoucher_GetVoucherIsNotSuccessful()
         {
-            Mock<IVoucherManagementClient> voucherManagementClient = new Mock<IVoucherManagementClient>();
+            Mock<ITransactionProcessorClient> voucherManagementClient = new Mock<ITransactionProcessorClient>();
             voucherManagementClient.Setup(v => v.RedeemVoucher(It.IsAny<String>(), It.IsAny<RedeemVoucherRequest>(), It.IsAny<CancellationToken>()))
                                    .ThrowsAsync(new Exception("Error", new InvalidOperationException(TestData.InvalidOperationErrorResponseMessage)));
             Mock<ISecurityServiceClient> securityServiceClient = new Mock<ISecurityServiceClient>();
@@ -157,7 +157,7 @@
         [Fact]
         public async Task VoucherManagementACLApplicationService_RedeemVoucher_HttpRequestExceptionErrorInGetVoucher_GetVoucherNotSuccessful()
         {
-            Mock<IVoucherManagementClient> voucherManagementClient = new Mock<IVoucherManagementClient>();
+            Mock<ITransactionProcessorClient> voucherManagementClient = new Mock<ITransactionProcessorClient>();
             voucherManagementClient.Setup(v => v.RedeemVoucher(It.IsAny<String>(), It.IsAny<RedeemVoucherRequest>(), It.IsAny<CancellationToken>()))
                                    .ThrowsAsync(new Exception("Error", new HttpRequestException(TestData.HttpRequestErrorResponseMessage)));
             Mock<ISecurityServiceClient> securityServiceClient = new Mock<ISecurityServiceClient>();
@@ -176,7 +176,7 @@
         [Fact]
         public async Task VoucherManagementACLApplicationService_RedeemVoucher_OtherExceptionErrorInInGetVoucher_GetVoucherNotSuccessful()
         {
-            Mock<IVoucherManagementClient> voucherManagementClient = new Mock<IVoucherManagementClient>();
+            Mock<ITransactionProcessorClient> voucherManagementClient = new Mock<ITransactionProcessorClient>();
             voucherManagementClient.Setup(v => v.RedeemVoucher(It.IsAny<String>(), It.IsAny<RedeemVoucherRequest>(), It.IsAny<CancellationToken>()))
                                    .ThrowsAsync(new Exception("Error", new Exception(TestData.GeneralErrorResponseMessage)));
             Mock<ISecurityServiceClient> securityServiceClient = new Mock<ISecurityServiceClient>();

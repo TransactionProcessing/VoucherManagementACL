@@ -29,7 +29,7 @@
         /// </summary>
         public MiddlewareRegistry()
         {
-            this.AddHealthChecks().AddSecurityService(this.ApiEndpointHttpHandler).AddVoucherManagementService();
+            this.AddHealthChecks().AddSecurityService(this.ApiEndpointHttpHandler).AddTransactionProcessorService();
 
             this.AddSwaggerGen(c =>
                                {

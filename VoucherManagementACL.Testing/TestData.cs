@@ -5,7 +5,7 @@
     using BusinessLogic.Requests;
     using Newtonsoft.Json;
     using SecurityService.DataTransferObjects.Responses;
-    using VoucherManagement.DataTransferObjects;
+    using TransactionProcessor.DataTransferObjects;
 
     /// <summary>
     /// 

@@ -6,7 +6,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using SecurityService.Client;
     using Shared.General;
-    using VoucherManagement.Client;
+    using TransactionProcessor.Client;
 
     /// <summary>
     /// 
@@ -22,7 +22,7 @@
         public ClientRegistry()
         {
             this.AddSingleton<ISecurityServiceClient, SecurityServiceClient>();
-            this.AddSingleton<IVoucherManagementClient, VoucherManagementClient>();
+            this.AddSingleton<ITransactionProcessorClient, TransactionProcessorClient>();
             this.AddSingleton<Func<String, String>>(container => serviceName => { return ConfigurationReader.GetBaseServerUri(serviceName).OriginalString; });
             HttpClientHandler httpClientHandler = new HttpClientHandler
                                                   {
