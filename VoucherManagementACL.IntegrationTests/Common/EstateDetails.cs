@@ -5,6 +5,7 @@ using System.Text;
 namespace VoucherManagement.IntegrationTests.Common
 {
     using System.Linq;
+    using TransactionProcessor.DataTransferObjects;
 
     public class EstateDetails
     {
@@ -62,6 +63,7 @@ namespace VoucherManagement.IntegrationTests.Common
             this.VoucherRedemptionUsersTokens = new Dictionary<String, Dictionary<String, String>>();
             this.OperatorVouchers = new Dictionary<Guid, List<(Guid transactionId, Decimal value, String voucherCode, Guid voucherId)>>();
             this.Contracts = new List<Contract>();
+            this.TransactionResponses = new Dictionary<(Guid merchantId, String transactionNumber), SerialisedMessage>();
         }
 
         #endregion
@@ -389,5 +391,23 @@ namespace VoucherManagement.IntegrationTests.Common
         }
 
         #endregion
+
+        private Dictionary<(Guid merchantId, String transactionNumber), SerialisedMessage> TransactionResponses { get; }
+
+        public SerialisedMessage GetTransactionResponse(Guid merchantId,
+                                                        String transactionNumber)
+        {
+            KeyValuePair<(Guid merchantId, String transactionNumber), SerialisedMessage> transactionResponse =
+                this.TransactionResponses.Where(t => t.Key.merchantId == merchantId && t.Key.transactionNumber == transactionNumber).SingleOrDefault();
+
+            return transactionResponse.Value;
+        }
+
+        public void AddTransactionResponse(Guid merchantId,
+                                           String transactionNumber,
+                                           SerialisedMessage transactionResponse)
+        {
+            this.TransactionResponses.Add((merchantId, transactionNumber), transactionResponse);
+        }
     }
 }

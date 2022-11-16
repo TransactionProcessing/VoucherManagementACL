@@ -50,7 +50,7 @@ namespace VoucherManagementACL.Tests.General
             configuration.Add("AppSettings:SecurityService", "http://127.0.0.1");
             configuration.Add("AppSettings:MessagingServiceApi", "http://127.0.0.1");
             configuration.Add("AppSettings:EstateManagementApi", "http://127.0.0.1");
-            configuration.Add("AppSettings:VoucherManagementApi", "http://127.0.0.1");
+            configuration.Add("AppSettings:TransactionProcessorApi", "http://127.0.0.1");
             configuration.Add("AppSettings:DatabaseEngine", "SqlServer");
 
             builder.AddInMemoryCollection(configuration);

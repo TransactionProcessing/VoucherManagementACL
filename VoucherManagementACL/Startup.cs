@@ -35,7 +35,6 @@ namespace VoucherManagementACL
     using Shared.Logger;
     using Swashbuckle.AspNetCore.Filters;
     using Swashbuckle.AspNetCore.SwaggerGen;
-    using VoucherManagement.Client;
     using ILogger = Microsoft.Extensions.Logging.ILogger;
 
     [ExcludeFromCodeCoverage]

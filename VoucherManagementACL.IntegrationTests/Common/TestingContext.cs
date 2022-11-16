@@ -5,9 +5,13 @@ using System.Text;
 namespace VoucherManagement.IntegrationTests.Common
 {
     using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
     using global::Shared.Logger;
+    using Newtonsoft.Json;
     using Shouldly;
     using TechTalk.SpecFlow;
+    using TransactionProcessor.DataTransferObjects;
 
     public class TestingContext
     {
@@ -168,5 +172,23 @@ namespace VoucherManagement.IntegrationTests.Common
         }
 
         #endregion
+
+        public async Task<GetVoucherResponse> GetVoucherByTransactionNumber(String estateName, String merchantName, Int32 transactionNumber)
+        {
+            EstateDetails estate = this.GetEstateDetails(estateName);
+            Guid merchantId = estate.GetMerchantId(merchantName);
+            SerialisedMessage serialisedMessage = estate.GetTransactionResponse(merchantId, transactionNumber.ToString());
+            SaleTransactionResponse transactionResponse = JsonConvert.DeserializeObject<SaleTransactionResponse>(serialisedMessage.SerialisedData,
+                                                                                                                     new JsonSerializerSettings
+                                                                                                                     {
+                                                                                                                         TypeNameHandling = TypeNameHandling.All
+                                                                                                                     });
+            GetVoucherResponse voucher = await this.DockerHelper.TransactionProcessorClient.GetVoucherByTransactionId(this.AccessToken,
+                estate.EstateId,
+                transactionResponse.TransactionId,
+                CancellationToken.None);
+            
+            return voucher;
+        }
     }
 }
