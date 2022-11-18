@@ -72,11 +72,7 @@ namespace VoucherManagement.IntegrationTests.Common
         public override async Task StartContainersForScenarioRun(String scenarioName)
         {
             await base.StartContainersForScenarioRun(scenarioName);
-
-            await this.SetupVoucherManagementAclContainer(new List<INetworkService> {
-                                                                                        this.TestNetworks.Last(),
-                                                                                    });
-
+            
             // Setup the base address resolvers
             String EstateManagementBaseAddressResolver(String api) => $"http://127.0.0.1:{this.EstateManagementPort}";
             String SecurityServiceBaseAddressResolver(String api) => $"https://127.0.0.1:{this.SecurityServicePort}";
