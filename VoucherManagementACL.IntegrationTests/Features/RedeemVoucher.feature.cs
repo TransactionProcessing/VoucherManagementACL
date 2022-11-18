@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace VoucherManagementACL.IntegrationTests.RedeemVoucher
+namespace VoucherManagementACL.IntegrationTests.Features
 {
     using TechTalk.SpecFlow;
     using System;
@@ -44,7 +44,7 @@ namespace VoucherManagementACL.IntegrationTests.RedeemVoucher
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "RedeemVoucher", "RedeemVoucher", null, ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "RedeemVoucher", null, ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         

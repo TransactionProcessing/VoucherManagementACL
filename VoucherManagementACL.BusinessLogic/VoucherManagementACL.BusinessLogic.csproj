@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	  <TargetFramework>net6.0</TargetFramework>
+	  <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="10.0.1" />
-    <PackageReference Include="SecurityService.Client" Version="1.1.1" />
-    <PackageReference Include="Shared" Version="1.5.0-beta6" />
-    <PackageReference Include="TransactionProcessor.Client" Version="1.1.13-build28" />
+    <PackageReference Include="MediatR" Version="11.0.0" />
+    <PackageReference Include="SecurityService.Client" Version="1.1.2-build23" />
+    <PackageReference Include="Shared" Version="1.5.1" />
+    <PackageReference Include="TransactionProcessor.Client" Version="1.1.13-build29" />
 
   </ItemGroup>
 
