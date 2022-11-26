@@ -118,7 +118,7 @@ namespace VoucherManagementACL
                                  endpoints.MapHealthChecks("healthui", new HealthCheckOptions()
                                                                      {
                                                                          Predicate = _ => true,
-                                                                         ResponseWriter = Shared.HealthChecks.HealthCheckMiddleware.WriteResponse
+                                                                         ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
                                                                      });
                              });
 
