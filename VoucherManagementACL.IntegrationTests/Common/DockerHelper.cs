@@ -99,20 +99,6 @@ namespace VoucherManagement.IntegrationTests.Common
             this.HttpClient.BaseAddress = new Uri(VoucherManagementAclBaseAddressResolver(string.Empty));
         }
 
-        public override async Task CreateEstateSubscriptions(String estateName)
-        {
-            List<(String streamName, String groupName, Int32 maxRetries)> subscriptions = new List<(String streamName, String groupName, Int32 maxRetries)>
-                                                                                          {
-                                                                                              (estateName.Replace(" ", ""), "Estate Management", 2),
-                                                                                              ($"TransactionProcessorSubscriptionStream_{estateName.Replace(" ", "")}", "Transaction Processor", 0),
-                                                                                              ($"FileProcessorSubscriptionStream_{estateName.Replace(" ", "")}", "File Processor", 0)
-                                                                                          };
-            foreach ((String streamName, String groupName, Int32 maxRetries) subscription in subscriptions)
-            {
-                await this.CreatePersistentSubscription(subscription);
-            }
-        }
-
         private async Task RemoveEstateReadModel()
         {
             List<Guid> estateIdList = this.TestingContext.GetAllEstateIds();
