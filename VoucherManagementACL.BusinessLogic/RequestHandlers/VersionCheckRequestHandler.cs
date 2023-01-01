@@ -3,6 +3,7 @@
     using System;
     using System.Threading;
     using System.Threading.Tasks;
+    using Common;
     using MediatR;
     using Requests;
     using Shared.General;
@@ -36,25 +37,12 @@
             if (requestVersion == null || requestVersion.CompareTo(minimumVersion) < 0)
             {
                 // This is not compatible
-                throw new VersionIncompatibleException($"Version Mistmatch - Version number [{requestVersion}] is less than the Minimum Supported version [{minimumVersion}]");
+                throw new VersionIncompatibleException($"Version Mismatch - Version number [{requestVersion}] is less than the Minimum Supported version [{minimumVersion}]");
             }
 
             return default;
         }
 
         #endregion
-    }
-
-    public class VersionIncompatibleException : Exception
-    {
-        public VersionIncompatibleException(String message) : base(message)
-        {
-            
-        }
-
-        public VersionIncompatibleException(String message, Exception innerException) : base(message, innerException)
-        {
-
-        }
     }
 }

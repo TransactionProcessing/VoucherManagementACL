@@ -1,10 +1,9 @@
 ﻿namespace VoucherManagementACL.Common.Examples
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
 
-    /// <summary>
-    /// 
-    /// </summary>
+    [ExcludeFromCodeCoverage]
     internal static class ExampleData
     {
         #region Fields

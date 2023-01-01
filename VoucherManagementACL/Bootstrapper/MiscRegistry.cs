@@ -3,11 +3,9 @@
     using Factories;
     using Lamar;
     using Microsoft.Extensions.DependencyInjection;
+    using System.Diagnostics.CodeAnalysis;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <seealso cref="Lamar.ServiceRegistry" />
+    [ExcludeFromCodeCoverage]
     public class MiscRegistry : ServiceRegistry
     {
         #region Constructors

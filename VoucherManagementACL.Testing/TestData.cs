@@ -6,6 +6,7 @@
     using Newtonsoft.Json;
     using SecurityService.DataTransferObjects.Responses;
     using TransactionProcessor.DataTransferObjects;
+    using RedeemVoucherRequest = BusinessLogic.Requests.RedeemVoucherRequest;
 
     /// <summary>
     /// 
@@ -42,6 +43,8 @@
         public static String ApplicationVersion = "1.0.5";
 
         public static VersionCheckRequest VersionCheckRequest = VersionCheckRequest.Create(TestData.ApplicationVersion);
+        public static RedeemVoucherRequest RedeemVoucherRequest = RedeemVoucherRequest.Create(TestData.EstateId, TestData.ContractId, TestData.VoucherCode);
+        public static GetVoucherRequest GetVoucherRequest = GetVoucherRequest.Create(TestData.EstateId, TestData.ContractId, TestData.VoucherCode);
 
         public static String VoucherCode = "1231231234";
 

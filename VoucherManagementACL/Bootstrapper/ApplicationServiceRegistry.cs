@@ -1,13 +1,11 @@
 ﻿namespace VoucherManagementACL.Bootstrapper
 {
+    using System.Diagnostics.CodeAnalysis;
     using BusinessLogic.Services;
     using Lamar;
     using Microsoft.Extensions.DependencyInjection;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <seealso cref="Lamar.ServiceRegistry" />
+    [ExcludeFromCodeCoverage]
     public class ApplicationServiceRegistry : ServiceRegistry
     {
         #region Constructors

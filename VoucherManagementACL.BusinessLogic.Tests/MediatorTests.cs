@@ -1,24 +1,36 @@
-﻿using Lamar;
+﻿using MediatR;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Moq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VoucherManagementACL.Testing;
+using Xunit;
 
-namespace VoucherManagementACL.Tests.General
+namespace VoucherManagementACL.BusinessLogic.Tests
 {
-    using System.Diagnostics;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.Extensions.Configuration;
+    using Lamar;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Hosting;
-    using Moq;
-    using Xunit;
+    using Services;
 
-    public class BootstrapperTests
+    public class MediatorTests
     {
+        private List<IBaseRequest> Requests = new List<IBaseRequest>();
+
+        public MediatorTests()
+        {
+            this.Requests.Add(TestData.VersionCheckRequest);
+            this.Requests.Add(TestData.GetVoucherRequest);
+            this.Requests.Add(TestData.RedeemVoucherRequest);
+        }
+
         [Fact]
-        public void VerifyBootstrapperIsValid()
+        public async Task Mediator_Send_RequestHandled()
         {
             Mock<IWebHostEnvironment> hostingEnvironment = new Mock<IWebHostEnvironment>();
             hostingEnvironment.Setup(he => he.EnvironmentName).Returns("Development");
@@ -32,6 +44,26 @@ namespace VoucherManagementACL.Tests.General
             this.AddTestRegistrations(services, hostingEnvironment.Object);
             s.ConfigureContainer(services);
             Startup.Container.AssertConfigurationIsValid(AssertMode.Full);
+
+            List<String> errors = new List<String>();
+            IMediator mediator = Startup.Container.GetService<IMediator>();
+            foreach (IBaseRequest baseRequest in this.Requests)
+            {
+                try
+                {
+                    await mediator.Send(baseRequest);
+                }
+                catch (Exception ex)
+                {
+                    errors.Add(ex.Message);
+                }
+            }
+
+            if (errors.Any() == true)
+            {
+                String errorMessage = String.Join(Environment.NewLine, errors);
+                throw new Exception(errorMessage);
+            }
         }
 
         private IConfigurationRoot SetupMemoryConfiguration()
@@ -52,6 +84,9 @@ namespace VoucherManagementACL.Tests.General
             configuration.Add("AppSettings:EstateManagementApi", "http://127.0.0.1");
             configuration.Add("AppSettings:TransactionProcessorApi", "http://127.0.0.1");
             configuration.Add("AppSettings:DatabaseEngine", "SqlServer");
+            configuration.Add("AppSettings:MinimumSupportedApplicationVersion", "1.0.0");
+            configuration.Add("AppSettings:ClientId", "clientId");
+            configuration.Add("AppSettings:ClientSecret", "clientSecret");
 
             builder.AddInMemoryCollection(configuration);
 
@@ -68,6 +103,8 @@ namespace VoucherManagementACL.Tests.General
             services.AddSingleton<IWebHostEnvironment>(hostingEnvironment);
             services.AddSingleton<IHostEnvironment>(hostingEnvironment);
             services.AddSingleton<IConfiguration>(Startup.Configuration);
+
+            services.OverrideServices(s => { s.AddSingleton<IVoucherManagementACLApplicationService, DummyVoucherManagementACLApplicationService>(); });
         }
     }
 }

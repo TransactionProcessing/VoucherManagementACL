@@ -1,6 +1,7 @@
 ﻿namespace VoucherManagementACL.Bootstrapper
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Net.Http;
     using Lamar;
     using Microsoft.Extensions.DependencyInjection;
@@ -8,10 +9,7 @@
     using Shared.General;
     using TransactionProcessor.Client;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <seealso cref="Lamar.ServiceRegistry" />
+    [ExcludeFromCodeCoverage]
     public class ClientRegistry : ServiceRegistry
     {
         #region Constructors

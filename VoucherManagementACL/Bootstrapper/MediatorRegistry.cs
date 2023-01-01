@@ -6,11 +6,9 @@
     using MediatR;
     using Microsoft.Extensions.DependencyInjection;
     using Models;
+    using System.Diagnostics.CodeAnalysis;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <seealso cref="Lamar.ServiceRegistry" />
+    [ExcludeFromCodeCoverage]
     public class MediatorRegistry : ServiceRegistry
     {
         #region Constructors
