@@ -2,11 +2,9 @@
 {
     using DataTransferObjects.Responses;
     using Swashbuckle.AspNetCore.Filters;
+    using System.Diagnostics.CodeAnalysis;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <seealso cref="Swashbuckle.AspNetCore.Filters.IExamplesProvider{VoucherManagementACL.DataTransferObjects.Responses.GetVoucherResponseMessage}" />
+    [ExcludeFromCodeCoverage]
     public class GetVoucherResponseMessageExample : IExamplesProvider<GetVoucherResponseMessage>
     {
         #region Methods

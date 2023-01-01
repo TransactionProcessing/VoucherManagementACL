@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Lamar" Version="8.1.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0" />
     <PackageReference Include="Moq" Version="4.18.2" />
     <PackageReference Include="Shouldly" Version="4.1.0" />
@@ -25,6 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\VoucherManagementACL.BusinessLogic\VoucherManagementACL.BusinessLogic.csproj" />
     <ProjectReference Include="..\VoucherManagementACL.Testing\VoucherManagementACL.Testing.csproj" />
+    <ProjectReference Include="..\VoucherManagementACL\VoucherManagementACL.csproj" />
   </ItemGroup>
 
 </Project>

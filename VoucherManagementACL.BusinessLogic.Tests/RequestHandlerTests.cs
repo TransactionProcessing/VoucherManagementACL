@@ -2,6 +2,7 @@ namespace VoucherManagementACL.BusinessLogic.Tests
 {
     using System.Threading;
     using System.Threading.Tasks;
+    using Common;
     using Microsoft.Extensions.Configuration;
     using Moq;
     using RequestHandlers;
@@ -39,11 +40,9 @@ namespace VoucherManagementACL.BusinessLogic.Tests
             Mock<IVoucherManagementACLApplicationService> voucherManagementACLApplicationService = new Mock<IVoucherManagementACLApplicationService>();
             VoucherRequestHandler requestHandler = new VoucherRequestHandler(voucherManagementACLApplicationService.Object);
 
-            GetVoucherRequest request = GetVoucherRequest.Create(TestData.EstateId, TestData.ContractId, TestData.VoucherCode);
-
             Should.NotThrow(async () =>
                             {
-                                await requestHandler.Handle(request, CancellationToken.None);
+                                await requestHandler.Handle(TestData.GetVoucherRequest, CancellationToken.None);
                             });
         }
 
@@ -52,12 +51,10 @@ namespace VoucherManagementACL.BusinessLogic.Tests
         {
             Mock<IVoucherManagementACLApplicationService> voucherManagementACLApplicationService = new Mock<IVoucherManagementACLApplicationService>();
             VoucherRequestHandler requestHandler = new VoucherRequestHandler(voucherManagementACLApplicationService.Object);
-
-            RedeemVoucherRequest request = RedeemVoucherRequest.Create(TestData.EstateId, TestData.ContractId, TestData.VoucherCode);
-
+            
             Should.NotThrow(async () =>
                             {
-                                await requestHandler.Handle(request, CancellationToken.None);
+                                await requestHandler.Handle(TestData.RedeemVoucherRequest, CancellationToken.None);
                             });
         }
 
@@ -67,10 +64,9 @@ namespace VoucherManagementACL.BusinessLogic.Tests
         {
             VersionCheckRequestHandler requestHandler = new VersionCheckRequestHandler();
             
-            VersionCheckRequest request = TestData.VersionCheckRequest;
             Should.NotThrow(async () =>
                             {
-                                await requestHandler.Handle(request, CancellationToken.None);
+                                await requestHandler.Handle(TestData.VersionCheckRequest, CancellationToken.None);
                             });
         }
 
@@ -96,6 +92,18 @@ namespace VoucherManagementACL.BusinessLogic.Tests
                             {
                                 await requestHandler.Handle(request, CancellationToken.None);
                             });
+        }
+
+        [Fact]
+        public async Task VersionCheckRequestHandler_Handle_InvalidVersionBuildNumber_RequestIsHandled()
+        {
+            VersionCheckRequestHandler requestHandler = new VersionCheckRequestHandler();
+
+            VersionCheckRequest request = VersionCheckRequest.Create("invalid");
+            Should.Throw<VersionIncompatibleException>(async () =>
+                                                       {
+                                                           await requestHandler.Handle(request, CancellationToken.None);
+                                                       }); ;
         }
 
         #endregion

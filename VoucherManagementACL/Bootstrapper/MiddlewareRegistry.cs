@@ -1,6 +1,7 @@
 ﻿namespace VoucherManagementACL.Bootstrapper
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Net.Http;
     using System.Reflection;
@@ -16,10 +17,7 @@
     using Shared.General;
     using Swashbuckle.AspNetCore.Filters;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <seealso cref="Lamar.ServiceRegistry" />
+    [ExcludeFromCodeCoverage]
     public class MiddlewareRegistry : ServiceRegistry
     {
         #region Constructors

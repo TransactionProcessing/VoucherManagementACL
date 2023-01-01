@@ -16,4 +16,8 @@
     <ProjectReference Include="..\VoucherManagementACL.Models\VoucherManagementACL.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Common\" />
+  </ItemGroup>
+
 </Project>
